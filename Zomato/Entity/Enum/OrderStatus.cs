@@ -1,0 +1,9 @@
+﻿namespace Zomato.Entity.Enum
+{
+    public enum OrderStatus
+    {
+        ACCEPTED, PREPARING, READY_FOR_PICKUP, DELIVERY_REQUEST_CREATED, DELIVERY_PARTNER_ASSIGNED,
+        ACCEPTED_BY_DELIVERY_PARTNER, OUT_FOR_DELIVERY,
+        DELIVERED, CANCELLED
+    }
+}
