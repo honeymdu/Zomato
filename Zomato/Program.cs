@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Zomato.Service;
 using Zomato.Service.Impl;
+using Zomato.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,6 +40,7 @@ builder.Services.AddAuthorization();
 // Registering the services
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IUserService,UserService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -54,6 +56,9 @@ builder.Services.AddEndpointsApiExplorer();
 //    });
 //});
 
+// Register AutoMapper
+builder.Services.AddAutoMapper(typeof(Program));
+
 var app = builder.Build();
 
 // ✅ Always enable Swagger
@@ -65,6 +70,12 @@ var app = builder.Build();
 //});
 
 app.UseHsts();
+
+// Add Middleware for Exception Handling
+app.UseMiddleware<ExceptionMiddleware>();
+
+
+
 //app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
