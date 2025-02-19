@@ -1,12 +1,16 @@
 ﻿using System.Runtime.InteropServices;
 using System;
 using NetTopologySuite.Geometries;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace Zomato.Model
 {
     public class Address
     {
-     
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
         public long id { get; set; }
         public String street { get; set; }
         public String city { get; set; }

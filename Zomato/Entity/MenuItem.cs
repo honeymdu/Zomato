@@ -4,11 +4,15 @@ using System.Text.RegularExpressions;
 using System;
 using Zomato.Entity.Enum;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace Zomato.Model
 {
     public class MenuItem
     {
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long id { get; set; }
         public String imageUrl { get; set; }
         public String name { get; set; }

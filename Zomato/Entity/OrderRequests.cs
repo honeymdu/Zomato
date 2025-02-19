@@ -4,11 +4,15 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using Zomato.Entity.Enum;
+using System.ComponentModel.DataAnnotations;
 
 namespace Zomato.Model
 {
     public class OrderRequests
     {
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long id { get; set; }
         public Cart cart { get; set; }
         public Double foodAmount { get; set; }

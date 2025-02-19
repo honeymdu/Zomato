@@ -6,6 +6,7 @@ using System.Text;
 using Zomato.Service;
 using Zomato.Service.Impl;
 using Zomato.Exceptions;
+using Zomato.Advices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -73,6 +74,9 @@ app.UseHsts();
 
 // Add Middleware for Exception Handling
 app.UseMiddleware<ExceptionMiddleware>();
+
+// Register global response middleware
+app.UseMiddleware<GlobalResponseMiddleware>(); 
 
 
 

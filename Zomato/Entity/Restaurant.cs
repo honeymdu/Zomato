@@ -3,11 +3,16 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System;
 using NetTopologySuite.Geometries;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace Zomato.Model
 {
     public class Restaurant
     {
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long id { get; set; }
         public String name { get; set; }
         public Point restaurantLocation { get; set; }

@@ -6,6 +6,7 @@
     using System.Net;
     using System.Text.Json;
     using System.Threading.Tasks;
+    using Zomato.Exceptions.CustomExceptionHandler;
 
     public class ExceptionMiddleware
     {
@@ -40,7 +41,12 @@
                 KeyNotFoundException => (int)HttpStatusCode.NotFound, // 404
                 UnauthorizedAccessException => (int)HttpStatusCode.Unauthorized, // 401
                 ArgumentException => (int)HttpStatusCode.BadRequest, // 400
-                _ => (int)HttpStatusCode.InternalServerError // 500
+                IllegalArgumentException => (int)HttpStatusCode.NoContent,
+                ResourceNotFoundException => (int)HttpStatusCode.NotFound,
+                RuntimeConfilictException => (int) HttpStatusCode.Conflict,
+                UserNotFoundException => (int) HttpStatusCode.Unauthorized,
+                _ => (int)HttpStatusCode.InternalServerError, // 500
+                
             };
 
             var response = new

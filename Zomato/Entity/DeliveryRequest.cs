@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.InteropServices;
 using NetTopologySuite.Geometries;
 using Zomato.Entity.Enum;
@@ -7,6 +8,9 @@ namespace Zomato.Model
 {
     public class DeliveryRequest
     {
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long id { get; set; }
         public Point PickupLocation { get; set; }
         public Point DropLocation { get; set; }

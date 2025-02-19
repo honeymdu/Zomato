@@ -1,11 +1,15 @@
 ﻿using System.Runtime.InteropServices;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace Zomato.Model
 {
     public class Cart
     {
-  
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long id { get; set; }
 
         public Consumer consumer { get; set; }

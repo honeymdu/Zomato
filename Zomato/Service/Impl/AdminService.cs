@@ -6,7 +6,7 @@ using Zomato.Exceptions.CustomExceptionHandler;
 using Zomato.Model;
 using AutoMapper;
 
-namespace Zomato.Service
+namespace Zomato.Service.Impl
 {
     public class AdminService : IAdminService
     {
@@ -22,7 +22,7 @@ namespace Zomato.Service
         {
             _context = context;
             _config = config;
-            this._userService = userService;
+            _userService = userService;
             _mapper = mapper;
             this.deliveryPartnerService = deliveryPartnerService;
         }

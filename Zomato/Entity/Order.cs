@@ -3,11 +3,15 @@ using System;
 using Zomato.Entity.Enum;
 using System.ComponentModel.DataAnnotations.Schema;
 using NetTopologySuite.Geometries;
+using System.ComponentModel.DataAnnotations;
 
 namespace Zomato.Model
 {
     public class Order
     {
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long id { get; set; }
         public Consumer consumer { get; set; }
         public List<OrderItem> orderItems { get; set; }

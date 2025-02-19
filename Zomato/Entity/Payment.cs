@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.InteropServices;
 using Zomato.Entity.Enum;
 
@@ -6,6 +7,9 @@ namespace Zomato.Model
 {
     public class Payment
     {
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long id { get; set; }
 
         [Column(TypeName = "nvarchar(20)")]
