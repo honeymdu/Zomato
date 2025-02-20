@@ -4,9 +4,9 @@ namespace Zomato.Dto
 {
     public class CreateMenu
     {
-        private String name { get; set; }
-        private List<MenuItemDto> menuItem { get; set; }
-        private Restaurant restaurant { get; set; }
+        public String name { get; set; }
+        public List<MenuItemDto> menuItem { get; set; }
+        public Restaurant restaurant { get; set; }
 
     }
 }

@@ -45,6 +45,7 @@
                 ResourceNotFoundException => (int)HttpStatusCode.NotFound,
                 RuntimeConfilictException => (int) HttpStatusCode.Conflict,
                 UserNotFoundException => (int) HttpStatusCode.Unauthorized,
+                InvalidCartException => (int) HttpStatusCode.BadRequest,
                 _ => (int)HttpStatusCode.InternalServerError, // 500
                 
             };

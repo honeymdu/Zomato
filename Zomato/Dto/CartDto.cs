@@ -4,8 +4,8 @@ namespace Zomato.Dto
 {
     public class CartDto
     {
-        private long id { get; set; }
-        private List<CartItemDto> cartItems { get; set; }
-        private Double totalPrice { get; set; }
+        public long id { get; set; }
+        public List<CartItemDto> cartItems { get; set; }
+        public Double totalPrice { get; set; }
     }
 }
