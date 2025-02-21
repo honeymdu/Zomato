@@ -21,7 +21,7 @@ namespace Zomato.Service.Impl
         {
             MenuItem menuItem = _mapper.Map<MenuItem>(menuItemDto);
             if (checkMenuItemExistByName(RestaurantId, menuItem)) {
-            throw new RuntimeConfilictException("Menu Item already exist with Menu Item Name " + menuItem.getName());
+            throw new RuntimeConfilictException("Menu Item already exist with Menu Item Name " + menuItem.name);
             }
             Menu menu = getMenuByRestaurant(RestaurantId);
             menuItem.menu = menu;

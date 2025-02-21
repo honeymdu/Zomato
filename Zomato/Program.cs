@@ -7,6 +7,7 @@ using Zomato.Service;
 using Zomato.Service.Impl;
 using Zomato.Exceptions;
 using Zomato.Advices;
+using Zomato.ServiceRegistry;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,9 +40,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 
 // Registering the services
-builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<ITokenService, TokenService>();
-builder.Services.AddScoped<IUserService,UserService>();
+
+var services = builder.Services;
+
+// Register all strategies using extension method
+services.AddStrategyServices();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
