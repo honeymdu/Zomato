@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using Zomato.Entity.Enum;
 
-namespace Zomato.Model
+namespace Zomato.Entity
 {
     public class WalletTransaction
     {

@@ -1,10 +1,11 @@
-﻿using AutoMapper;
+﻿using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using NetTopologySuite.Index.HPRtree;
 using Zomato.Data;
+using Zomato.Entity;
 using Zomato.Entity.Enum;
 using Zomato.Exceptions.CustomExceptionHandler;
-using Zomato.Model;
 
 namespace Zomato.Service.Impl
 {
@@ -59,6 +60,13 @@ namespace Zomato.Service.Impl
         {
         return _context.Order.Find(OrderId) ?? throw new ResourceNotFoundException("Order Not Found with Id" + OrderId);
         }
+
+        public async Task<Order> GetOrderByIdAsync(long orderId)
+        {
+            var order = await _context.Order.FindAsync(orderId);
+            return order ?? throw new ResourceNotFoundException($"Order not found with ID {orderId}");
+        }
+
 
         public Order saveOrder(Order order)
         {

@@ -4,7 +4,7 @@ using NetTopologySuite.Geometries;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace Zomato.Model
+namespace Zomato.Entity
 {
     public class Address
     {

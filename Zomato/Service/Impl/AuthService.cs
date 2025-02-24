@@ -7,7 +7,7 @@ using System.Security.Claims;
 using System.Text;
 using BCrypt.Net;
 using Microsoft.EntityFrameworkCore;
-using Zomato.Model;
+using Zomato.Entity;
 using Zomato.Entity.Enum;
 
 namespace Zomato.Service

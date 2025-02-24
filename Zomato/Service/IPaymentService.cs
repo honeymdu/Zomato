@@ -1,5 +1,5 @@
 ﻿using Zomato.Entity.Enum;
-using Zomato.Model;
+using Zomato.Entity;
 
 namespace Zomato.Service
 {

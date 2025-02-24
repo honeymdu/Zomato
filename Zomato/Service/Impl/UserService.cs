@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.OpenApi.Expressions;
 using Zomato.Data;
+using Zomato.Entity;
 using Zomato.Exceptions.CustomExceptionHandler;
-using Zomato.Model;
 
 namespace Zomato.Service.Impl
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Zomato.Data;
 using Zomato.Dto;
-using Zomato.Model;
+using Zomato.Entity;
 
 namespace Zomato.Strategies.Impl
 {

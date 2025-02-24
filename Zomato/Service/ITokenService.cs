@@ -4,8 +4,8 @@
     using System.Security.Claims;
     using System.Text;
     using Microsoft.IdentityModel.Tokens;
+    using Zomato.Entity;
     using Zomato.Entity.Enum;
-    using Zomato.Model;
 
     public interface ITokenService
     {

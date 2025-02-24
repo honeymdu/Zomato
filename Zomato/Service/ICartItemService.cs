@@ -1,5 +1,5 @@
 ﻿using System.Runtime.InteropServices;
-using Zomato.Model;
+using Zomato.Entity;
 
 namespace Zomato.Service
 {

@@ -1,4 +1,4 @@
-﻿using Zomato.Model;
+﻿using Zomato.Entity;
 
 namespace Zomato.Dto
 {

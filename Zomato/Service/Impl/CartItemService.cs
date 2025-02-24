@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Zomato.Data;
 using Zomato.Exceptions.CustomExceptionHandler;
-using Zomato.Model;
+using Zomato.Entity;
 
 namespace Zomato.Service.Impl
 {

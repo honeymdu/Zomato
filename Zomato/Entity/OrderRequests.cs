@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using Zomato.Entity.Enum;
 using System.ComponentModel.DataAnnotations;
 
-namespace Zomato.Model
+namespace Zomato.Entity
 {
     public class OrderRequests
     {

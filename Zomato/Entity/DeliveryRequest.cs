@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using NetTopologySuite.Geometries;
 using Zomato.Entity.Enum;
 
-namespace Zomato.Model
+namespace Zomato.Entity
 {
     public class DeliveryRequest
     {

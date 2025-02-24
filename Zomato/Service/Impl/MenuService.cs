@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Zomato.Data;
 using Zomato.Dto;
+using Zomato.Entity;
 using Zomato.Exceptions.CustomExceptionHandler;
-using Zomato.Model;
 
 namespace Zomato.Service.Impl
 {

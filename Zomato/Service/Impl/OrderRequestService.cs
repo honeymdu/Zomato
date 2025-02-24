@@ -2,9 +2,9 @@
 using NetTopologySuite.Geometries;
 using Zomato.Data;
 using Zomato.Dto;
+using Zomato.Entity;
 using Zomato.Entity.Enum;
 using Zomato.Exceptions.CustomExceptionHandler;
-using Zomato.Model;
 using Zomato.Strategies;
 
 namespace Zomato.Service.Impl

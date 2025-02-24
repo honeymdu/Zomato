@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using Zomato.Dto;
 using Zomato.Entity.Enum;
-using Zomato.Model;
+using Zomato.Entity;
 
 namespace Zomato.Service
 {

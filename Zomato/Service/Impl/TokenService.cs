@@ -2,7 +2,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Zomato.Model;
+using Zomato.Entity;
 
 namespace Zomato.Service.Impl
 {

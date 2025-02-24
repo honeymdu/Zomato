@@ -1,7 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using Zomato.Entity.Enum;
-using Zomato.Model;
-
+using Zomato.Entity;
 namespace Zomato.Service
 {
     public interface IOrderService
@@ -10,6 +9,8 @@ namespace Zomato.Service
         Order updateOrderStatus(long OrderId, OrderStatus orderStatus);
 
         Order getOrderById(long OrderId);
+
+        Task<Order> GetOrderByIdAsync(long orderId);
 
         Order createOrder(OrderRequests orderRequests);
 

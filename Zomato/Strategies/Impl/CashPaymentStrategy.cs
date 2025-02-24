@@ -1,6 +1,6 @@
 ﻿using Zomato.Data;
+using Zomato.Entity;
 using Zomato.Entity.Enum;
-using Zomato.Model;
 using Zomato.Service;
 using Zomato.Service.Impl;
 

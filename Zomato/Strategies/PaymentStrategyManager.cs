@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Zomato.Entity.Enum;
-using Zomato.Model;
 using Zomato.Strategies.Impl;
 
 namespace Zomato.Strategies

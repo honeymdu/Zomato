@@ -1,8 +1,9 @@
 ﻿using Azure;
 using NetTopologySuite.Geometries;
 using System.Runtime.InteropServices;
+using X.PagedList;
 using Zomato.Dto;
-using Zomato.Model;
+using Zomato.Entity;
 
 namespace Zomato.Service
 {
@@ -13,11 +14,13 @@ namespace Zomato.Service
 
         Restaurant getRestaurantById(long restaurantId);
 
+        Task<Restaurant> getRestaurantByIdAsync(long restaurantId);
+
         Menu viewMenu(long restaurantId);
 
         Restaurant viewProfile(long restaurantId);
 
-        //Page<Restaurant> findAllRestaurant(Pageable pageRequest);
+//        IPagedList<Restaurant> findAllRestaurant(int pageNumber, int pageSize)
 
         List<Restaurant> getRestaurantByRestaurantPartner(RestaurantPartner restaurantPartner);
 
@@ -25,9 +28,9 @@ namespace Zomato.Service
 
         Restaurant save(Restaurant restaurant);
 
-        Page<Restaurant> getAllVarifiedRestaurant(PageRequest pageRequest);
+        IPagedList<Restaurant> getAllVarifiedRestaurant(int pageNumber, int pageSize);
 
-        List<Restaurant> getAllVarifiedAndActiveRestaurant();
+        Task<List<Restaurant>> GetAllVerifiedAndActiveRestaurants();
 
         List<Restaurant> getTopTenNearestRestaurants(Point UserSrc);
 

@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using NetTopologySuite.Geometries;
+using Zomato.Entity;
 using Zomato.Entity.Enum;
-using Zomato.Model;
 namespace Zomato.Service
 {
     public interface IOrderRequestService

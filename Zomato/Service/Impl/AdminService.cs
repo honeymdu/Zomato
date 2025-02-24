@@ -3,7 +3,7 @@ using Zomato.Data;
 using Zomato.Dto;
 using Zomato.Entity.Enum;
 using Zomato.Exceptions.CustomExceptionHandler;
-using Zomato.Model;
+using Zomato.Entity;
 using AutoMapper;
 
 namespace Zomato.Service.Impl

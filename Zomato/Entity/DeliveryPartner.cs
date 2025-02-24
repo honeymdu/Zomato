@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using NetTopologySuite.Geometries;
 
-namespace Zomato.Model
+namespace Zomato.Entity
 {
     public class DeliveryPartner
     {

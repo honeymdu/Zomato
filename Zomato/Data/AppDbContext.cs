@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 using System.Linq;
-using Zomato.Model;
+using Zomato.Entity;
 
 namespace Zomato.Data
 {

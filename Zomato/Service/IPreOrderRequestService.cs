@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using NetTopologySuite.Geometries;
 using Zomato.Dto;
-using Zomato.Model;
+using Zomato.Entity;
 
 namespace Zomato.Service
 {

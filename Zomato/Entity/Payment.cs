@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.InteropServices;
 using Zomato.Entity.Enum;
 
-namespace Zomato.Model
+namespace Zomato.Entity
 {
     public class Payment
     {

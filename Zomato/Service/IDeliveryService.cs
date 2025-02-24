@@ -1,12 +1,15 @@
-﻿using System.Runtime.InteropServices;
-using Zomato.Model;
+﻿
+using Zomato.Entity;
 
 namespace Zomato.Service
 {
     public interface IDeliveryService
     {
-        void AssignDeliveryPartner();
-        DeliveryRequest createDeliveryRequest(Order order);
-        DeliveryRequest getDeliveryRequestByOrderId(long orderId);
+       
+        Task AssignDeliveryPartnerAsync();
+
+        Task<DeliveryRequest> CreateDeliveryRequestAsync(Order order);
+        DeliveryRequest getDeliveryRequestByOrderId(long id);
+        Task<DeliveryRequest> GetDeliveryRequestByOrderIdAsync(long orderId);
     }
 }
