@@ -10,7 +10,7 @@ namespace Zomato.Service
         Boolean setMenuItemStatus(long RestaurantId, long menuItemId, Boolean isAvailable);
         Boolean removeMenuItem(long RestaurantId, long MenuItemId);
         MenuItem getMenuItemById(long RestaurantId, long MenuItemId);
-        Menu getMenuByRestaurant(long RestaurantId);
+        Task<Menu> getMenuByRestaurant(long RestaurantId);
         Menu CreateMenu(CreateMenu createMenu);
         Menu getMenuById(long MenuItemId);
         Boolean checkMenuItemExistByName(long RestaurantId, MenuItem MenuItem);

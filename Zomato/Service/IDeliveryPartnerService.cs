@@ -17,7 +17,7 @@ namespace Zomato.Service
 
         void completeOrderDelivery(long deliveryRequestId, String consumerOtp);
 
-        DeliveryPartnerDto save(DeliveryPartner deliveryPartner);
+        Task<DeliveryPartnerDto> save(DeliveryPartner deliveryPartner);
 
         Page<DeliveryPartner> getAllDeliveryPartner(PageRequest pageRequest);
 

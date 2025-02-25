@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
+using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using NetTopologySuite.Index.HPRtree;
 using Zomato.Data;
 using Zomato.Dto;
@@ -28,10 +30,10 @@ namespace Zomato.Service.Impl
             this.cartItemService = cartItemService;
         }
 
-        public CartDto addItemToCart(long CartId, CartItem cartItem)
+        public async Task<CartDto> addItemToCart(long CartId, CartItem cartItem)
         {
             var cart = _context.Cart.Find(CartId);
-            isValidCart(cart);
+            await isValidCart(cart);
             if (cart.cartItems == null)
             {
                 cart.cartItems = new List<CartItem>();
@@ -40,22 +42,25 @@ namespace Zomato.Service.Impl
             cart.totalPrice = cart.totalPrice
                 + (cartItem.menuItem.price * cartItem.totalPrice);
             _context.Cart.Update(cart);
+            await _context.SaveChangesAsync();
             return _mapper.Map<CartDto>(cart);
 
         }
 
-        public Cart clearCartItemFromCart(long CartId)
+        public async Task<Cart> clearCartItemFromCart(long CartId)
         {
             var cart = _context.Cart.Find(CartId);
-            isValidCart(cart);
+            await isValidCart(cart);
             cart.cartItems.Clear();
             cart.totalPrice = 0.0;
-            return _context.Cart.Update(cart).Entity;
+            _context.Cart.Update(cart);
+           await _context.SaveChangesAsync();
+            return cart;
         }
 
-        public Cart createCart(long restaurantId, Consumer consumer)
+        public async Task<Cart> createCart(long restaurantId, Consumer consumer)
         {
-            Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
+            var restaurant = await restaurantService.getRestaurantById(restaurantId);
             var cart = new Cart() 
             {   restaurant = restaurant,
                 consumer = consumer, 
@@ -63,54 +68,60 @@ namespace Zomato.Service.Impl
                 validCart = true
             };
             _context.Cart.Add(cart);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return cart;
         }
 
-        public void deleteAllCartItemByCartId(long cartId)
+        public async Task deleteAllCartItemByCartId(long cartId)
         {
-            var cart = _context.Cart.Find(cartId);
-            clearCartItemFromCart(cartId);
+            var cart = await _context.Cart.FindAsync(cartId);
+            await clearCartItemFromCart(cartId);
 
-            inValidCart(cart);
+           await inValidCart(cart);
         }
 
-        public Cart getCartByConsumerIdAndRestaurantId(long ConsumerId, long restaurantId)
+        public async Task<Cart> getCartByConsumerIdAndRestaurantId(long ConsumerId, long restaurantId)
         {
-            return _context.Cart.Where(c => c.restaurant.id == restaurantId && c.consumer.id == ConsumerId && c.validCart == true)
-                .SingleOrDefault()?? throw new ResourceNotFoundException("Cart Not found"); 
-        
+            var cart = await _context.Cart.Where(c => c.restaurant.id == restaurantId && c.consumer.id == ConsumerId && c.validCart == true)
+                .SingleOrDefaultAsync();
+            if(cart == null)
+            {
+                throw new ResourceNotFoundException("Cart Not found");
+            }
+
+            return cart;    
         }
             
 
-        public Cart getCartById(long CartId)
+        public async Task<Cart> getCartById(long CartId)
         {
-           return _context.Cart.Find(CartId) ?? throw new ResourceNotFoundException("Cart Not found with cart Id = "+CartId);
+           return await _context.Cart.FindAsync(CartId) ?? throw new ResourceNotFoundException("Cart Not found with cart Id = "+CartId);
         }
 
-        public void inValidCart(Cart cart)
+        public async Task inValidCart(Cart cart)
         {
             cart.validCart = false;
             _context.Update(cart);
-            _context.SaveChanges();
+           await _context.SaveChangesAsync();
         }
 
-        public void isValidCart(Cart cart)
+        public async Task isValidCart(Cart cart)
         {
             if (!cart.validCart)
             {
                 throw new InvalidCartException("Cart is not valid with cartId " + cart.id);
             }
-            if (!restaurantService.getRestaurantById(cart.restaurant.id).isAvailable)
+            var restaurant = await restaurantService.getRestaurantById(cart.restaurant.id);
+            if (!restaurant.isAvailable)
             {
-                inValidCart(cart);
+                await inValidCart(cart);
                 throw new InvalidCartException("Cart is not valid with cartId " + cart.id);
             }
         }
 
-        public bool isValidCartExist(Consumer consumer, long RestaurantId)
+        public async Task<bool> isValidCartExist(Consumer consumer, long RestaurantId)
         {
-            var cart = getCartByConsumerIdAndRestaurantId(consumer.id, RestaurantId);
+            var cart = await getCartByConsumerIdAndRestaurantId(consumer.id, RestaurantId);
             if (cart == null)
             {
                 return false;
@@ -118,20 +129,20 @@ namespace Zomato.Service.Impl
             return true;
         }
 
-        public CartDto prepareCart(Consumer consumer, long RestaurantId, long MenuItemId)
+        public async Task<CartDto> prepareCart(Consumer consumer, long RestaurantId, long MenuItemId)
         {
             // check cart already exist with current Restaurent Id
-            bool isValidCart = isValidCartExist(consumer, RestaurantId);
+            bool isValidCart = await isValidCartExist(consumer, RestaurantId);
 
             if (!isValidCart)
             {
-                var _cart = createCart(RestaurantId, consumer);
+                var _cart = await createCart(RestaurantId, consumer);
                 var _menuItem = menuService.getMenuItemById(RestaurantId, MenuItemId);
                 var _cartItem = cartItemService.createNewCartItem(_menuItem, _cart);
-                return addItemToCart(_cart.id, _cartItem);
+                return await addItemToCart(_cart.id, _cartItem);
             }
 
-            Cart cart = getCartByConsumerIdAndRestaurantId(consumer.id, RestaurantId);
+            var cart = await getCartByConsumerIdAndRestaurantId(consumer.id, RestaurantId);
             MenuItem menuItem = menuService.getMenuItemById(RestaurantId, MenuItemId);
 
             if (cartItemService.isMenuItemExistInCart(menuItem, cart))
@@ -145,17 +156,17 @@ namespace Zomato.Service.Impl
             else
             {
                 CartItem cartItem = cartItemService.createNewCartItem(menuItem, cart);
-                return addItemToCart(cart.id, cartItem);
+                return await addItemToCart(cart.id, cartItem);
             }
 
             }
  
-        public CartDto removeItemFromCart(long CartId, CartItem cartItem)
+        public async Task<CartDto> removeItemFromCart(long CartId, CartItem cartItem)
         {
-            Cart cart = getCartById(CartId);
-            isValidCart(cart);
+            var cart = await getCartById(CartId);
+            await isValidCart(cart);
 
-            if (!cartItemService.isCartItemExist(cartItem))
+            if (!await cartItemService.isCartItemExist(cartItem))
             {
                 throw new ResourceNotFoundException("CartItem not found in Cart with ID " + CartId);
             }
@@ -168,32 +179,36 @@ namespace Zomato.Service.Impl
             {
                 cartItemService.removeCartItemFromCart(cartItem);
             }
-            refreshCartTotalPrice(cart);
-            cart = getCartById(CartId);
+            await refreshCartTotalPrice(cart);
+            cart = await getCartById(CartId);
             CartDto cartDto = _mapper.Map<CartDto>(cart);
             return cartDto;
         }
 
-        public Cart saveCart(Cart cart)
+        public async Task<Cart> saveCart(Cart cart)
         {
-           return _context.Cart.Update(cart).Entity;
+            _context.Cart.Update(cart);
+            await _context.SaveChangesAsync();
+            return cart;
         }
 
-        public CartDto viewCart(long CartId)
+        public async Task<CartDto> viewCart(long CartId)
         {
             var cart = getCartById(CartId);
             CartDto cartDto = _mapper.Map<CartDto>(cart);
-            List<CartItem> cartItem = cartItemService.getAllCartItemsByCartId(CartId);
+            List<CartItem> cartItem =await cartItemService.getAllCartItemsByCartId(CartId);
             List<CartItemDto> cartItemdto = _mapper.Map<List<CartItemDto>>(cartItem);
             cartDto.cartItems = cartItemdto;
             return cartDto;
 
         }
 
-        private Cart refreshCartTotalPrice(Cart cart)
+        private async Task<Cart> refreshCartTotalPrice(Cart cart)
         {
             cart.totalPrice = cart.cartItems.Sum(item => item.totalPrice);
-            return _context.Cart.Update(cart).Entity;
+            _context.Cart.Update(cart);
+           await _context.SaveChangesAsync();
+            return cart;
         }
     }
 }

@@ -163,9 +163,12 @@ public class DeliveryService : IDeliveryService
     }
 
 
-    public DeliveryRequest getDeliveryRequestByOrderId(long id)
+    public async Task<DeliveryRequest> getDeliveryRequestByOrderId(long id)
     {
-      return _context.DeliveryRequest.Find(id)?? throw new ResourceNotFoundException("Request not found");
+        var DeliveryRequest = await _context.DeliveryRequest.FindAsync(id);
+        if(DeliveryRequest == null) { throw new ResourceNotFoundException("Delivery Request Not Found"); }
+        return DeliveryRequest;
+        
     }
 
 }

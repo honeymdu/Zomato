@@ -2,6 +2,8 @@
 using Zomato.Data;
 using Zomato.Exceptions.CustomExceptionHandler;
 using Zomato.Entity;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Zomato.Service.Impl
 {
@@ -45,14 +47,14 @@ namespace Zomato.Service.Impl
                     - (cartItem.menuItem.price * quantity);
         }
 
-        public List<CartItem> getAllCartItemsByCartId(long cartId)
+        public async Task<List<CartItem>> getAllCartItemsByCartId(long cartId)
         {
-            return _context.CartItem.Where(c => c.cart.id.Equals(cartId)).ToList();
+            return await _context.CartItem.Where(c => c.cart.id.Equals(cartId)).ToListAsync();
         }
 
-        public CartItem getCartItemById(long cartItemId)
+        public async Task<CartItem> getCartItemById(long cartItemId)
         {
-            return _context.CartItem.Find(cartItemId)?? 
+            return await _context.CartItem.FindAsync(cartItemId)?? 
                 throw new ResourceNotFoundException("CartItem not found for the given menu item in cart.");
         }
 
@@ -73,9 +75,9 @@ namespace Zomato.Service.Impl
             cartItem.totalPrice = cartItem.menuItem.price * cartItem.quantity;
         }
 
-        public bool isCartItemExist(CartItem cartItem)
+        public async Task<bool> isCartItemExist(CartItem cartItem)
         {
-            return _context.CartItem.Any(c=>c.id.Equals(cartItem.id));
+            return await _context.CartItem.AnyAsync(c=>c.id.Equals(cartItem.id));
         }
 
         public bool isMenuItemExistInCart(MenuItem menuItem, Cart cart)

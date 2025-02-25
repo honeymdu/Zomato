@@ -4,9 +4,9 @@ namespace Zomato.Service
 {
     public interface IAuthService
     {
-        String[] login(String email, String password);
+        Task<String[]> login(String email, String password);
 
-        UserDto SignUp(SignUpDto signupDto);
+        Task<UserDto> SignUp(SignUpDto signupDto);
 
         String refreshToken(String refreshToken);
     }

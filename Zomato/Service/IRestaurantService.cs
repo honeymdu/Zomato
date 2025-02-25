@@ -10,31 +10,31 @@ namespace Zomato.Service
     public interface IRestaurantService
     {
 
-        Restaurant AddNewRestaurant(RestaurantPartner restaurantPartner, RestaurantDto restaurantDto);
+        Task<Restaurant> AddNewRestaurant(RestaurantPartner restaurantPartner, RestaurantDto restaurantDto);
 
-        Restaurant getRestaurantById(long restaurantId);
+        Task<Restaurant> getRestaurantById(long restaurantId);
 
         Task<Restaurant> getRestaurantByIdAsync(long restaurantId);
 
-        Menu viewMenu(long restaurantId);
+        Task<Menu> viewMenu(long restaurantId);
 
-        Restaurant viewProfile(long restaurantId);
+        Task<Restaurant> viewProfile(long restaurantId);
 
 //        IPagedList<Restaurant> findAllRestaurant(int pageNumber, int pageSize)
 
-        List<Restaurant> getRestaurantByRestaurantPartner(RestaurantPartner restaurantPartner);
+        Task<List<Restaurant>> getRestaurantByRestaurantPartner(RestaurantPartner restaurantPartner);
 
-        Boolean IsRestaurentAlreadyExist(Restaurant newRestaurant);
+        Task<Boolean> IsRestaurentAlreadyExist(Restaurant newRestaurant);
 
-        Restaurant save(Restaurant restaurant);
+        Task<Restaurant> save(Restaurant restaurant);
 
-        IPagedList<Restaurant> getAllVarifiedRestaurant(int pageNumber, int pageSize);
+        Task<IPagedList<Restaurant>> getAllVarifiedRestaurant(int pageNumber, int pageSize);
 
         Task<List<Restaurant>> GetAllVerifiedAndActiveRestaurants();
 
-        List<Restaurant> getTopTenNearestRestaurants(Point UserSrc);
+        Task<List<Restaurant>> getTopTenNearestRestaurants(Point UserSrc);
 
-        void IsRestaurentActiveOrVarified(long restaurantId);
+        Task IsRestaurentActiveOrVarified(long restaurantId);
 
     }
 }

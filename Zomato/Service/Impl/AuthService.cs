@@ -9,6 +9,7 @@ using BCrypt.Net;
 using Microsoft.EntityFrameworkCore;
 using Zomato.Entity;
 using Zomato.Entity.Enum;
+using System.Threading.Tasks;
 
 namespace Zomato.Service
 {
@@ -25,7 +26,7 @@ namespace Zomato.Service
             this.tokenService = tokenService;
         }
 
-        public string[] login(string email, string password)
+        public async Task<string[]> login(string email, string password)
         {
             var user = _context.User.FirstOrDefault(u => u.email == email);
             if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.password))
@@ -35,7 +36,7 @@ namespace Zomato.Service
 
             var accessToken = GenerateJwtToken(user);
        
-            _context.SaveChanges();
+           await _context.SaveChangesAsync();
 
             return new string[] { accessToken };
         }
@@ -45,7 +46,7 @@ namespace Zomato.Service
            return tokenService.GenerateToken(user);
         }
 
-        public UserDto SignUp(SignUpDto signupDto)
+        public async Task<UserDto> SignUp(SignUpDto signupDto)
         {
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(signupDto.password);
 
@@ -59,7 +60,7 @@ namespace Zomato.Service
             };
 
             _context.User.Add(user);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return new UserDto { name = user.name, email = user.email, role = user.role ,contact = user.contact};
 

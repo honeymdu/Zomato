@@ -24,7 +24,7 @@ namespace Zomato.Service.Impl
             _mapper = mapper;
         }
 
-        public Restaurant AddNewRestaurant(RestaurantPartner restaurantPartner, RestaurantDto restaurantDto)
+        public async Task<Restaurant> AddNewRestaurant(RestaurantPartner restaurantPartner, RestaurantDto restaurantDto)
         {
             Restaurant restaurant = _mapper.Map<Restaurant>(restaurantDto);
             restaurant.isVarified = false;
@@ -32,7 +32,7 @@ namespace Zomato.Service.Impl
             restaurant.rating = 0.0;
             restaurant.restaurantPartner = restaurantPartner;
             _context.Restaurant.Add(restaurant);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return restaurant;
         }
 
@@ -45,66 +45,77 @@ namespace Zomato.Service.Impl
         }
 
 
-        public IPagedList<Restaurant> getAllVarifiedRestaurant(int pageNumber, int pageSize)
+        public async Task<IPagedList<Restaurant>> getAllVarifiedRestaurant(int pageNumber, int pageSize)
         {
-            return _context.Restaurant
-            .Where(r => r.isAvailable && r.isVarified) // Filter available & verified restaurants
-            .OrderBy(r => r.id) // Optional ordering
-            .ToPagedList(pageNumber, pageSize); // Pagination
+            var query = _context.Restaurant
+            .Where(r => r.isAvailable && r.isVarified)
+            .OrderBy(r => r.id);
+
+            // Get paginated list manually
+            var restaurants = await query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+
+            // Convert to PagedList
+            return new StaticPagedList<Restaurant>(restaurants, pageNumber, pageSize, await query.CountAsync());
         }
 
-        public Restaurant getRestaurantById(long restaurantId)
+        public async Task<Restaurant> getRestaurantById(long restaurantId)
         {
-            return _context.Restaurant.Find(restaurantId) ?? throw new ResourceNotFoundException("Restaurant Not Found with Id" + restaurantId);
+           var restaurant = await _context.Restaurant.FindAsync(restaurantId);
+            if(restaurant == null)
+            {
+                throw new ResourceNotFoundException("Restaurant Not Found with Id" + restaurantId);
+            }
+            return restaurant;
+
         }
 
-        public List<Restaurant> getRestaurantByRestaurantPartner(RestaurantPartner restaurantPartner)
+        public async Task<List<Restaurant>> getRestaurantByRestaurantPartner(RestaurantPartner restaurantPartner)
         {
-            return _context.Restaurant.Where(r => r.restaurantPartner.id == restaurantPartner.id).ToList();
+            return await _context.Restaurant.Where(r => r.restaurantPartner.id == restaurantPartner.id).ToListAsync();
         }
 
-        public List<Restaurant> getTopTenNearestRestaurants(Point UserSrc)
+        public async Task<List<Restaurant>> getTopTenNearestRestaurants(Point UserSrc)
         {
-            return _context.Restaurant
+            return await _context.Restaurant
             .Where(r => r.isAvailable && r.isVarified &&
                         r.restaurantLocation.IsWithinDistance(UserSrc, 15000)) // 15km radius
             .OrderBy(r => r.restaurantLocation.Distance(UserSrc)) // Sort by nearest
             .Take(10) // Limit 10
-            .ToList();
+            .ToListAsync();
         }
 
-        public void IsRestaurentActiveOrVarified(long restaurantId)
+        public async Task IsRestaurentActiveOrVarified(long restaurantId)
         {
-            if (!(_context.Restaurant.Any(r=>r.id == restaurantId)))
+            if (!(await _context.Restaurant.AnyAsync(r=>r.id == restaurantId)))
             {
                 throw new ResourceNotFoundException("Restaurant Not Exist with Id =" + restaurantId);
             }
 
-            if (!(_context.Restaurant.Any(r => r.id == restaurantId && r.isAvailable == true && r.isVarified == true)))
+            if (!(await _context.Restaurant.AnyAsync(r => r.id == restaurantId && r.isAvailable == true && r.isVarified == true)))
             {
                 throw new Exception("Restaurant is not available for orders at the moment with Id =" + restaurantId);
             }
         }
 
-        public bool IsRestaurentAlreadyExist(Restaurant newRestaurant)
+        public async Task<bool> IsRestaurentAlreadyExist(Restaurant newRestaurant)
         {
-            return _context.Restaurant.Any(r => r.name == newRestaurant.name && r.restaurantPartner == newRestaurant.restaurantPartner); 
+            return await _context.Restaurant.AnyAsync(r => r.name == newRestaurant.name && r.restaurantPartner == newRestaurant.restaurantPartner); 
            
         }
 
-        public Restaurant save(Restaurant restaurant)
+        public async Task<Restaurant> save(Restaurant restaurant)
         {
             _context.Update(restaurant);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return restaurant;
         }
 
-        public Menu viewMenu(long restaurantId)
+        public async Task<Menu> viewMenu(long restaurantId)
         {
-            return menuService.getMenuByRestaurant(restaurantId);
+            return await menuService.getMenuByRestaurant(restaurantId);
         }
 
-        public Restaurant viewProfile(long restaurantId)
+        public async Task<Restaurant> viewProfile(long restaurantId)
         {
             throw new NotImplementedException();
         }
@@ -114,5 +125,6 @@ namespace Zomato.Service.Impl
             var restaurant = await _context.Restaurant.FindAsync(restaurantId);
             return restaurant ?? throw new ResourceNotFoundException("Restaurant Not Found with Id" + restaurantId);
         }
+
     }
 }

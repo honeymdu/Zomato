@@ -6,18 +6,18 @@ namespace Zomato.Service
 {
     public interface ICartService
     {
-        Cart createCart(long restaurantId, Consumer consumer);
-        CartDto addItemToCart(long CartId, CartItem cartItem);
-        CartDto viewCart(long CartId);
-        CartDto removeItemFromCart(long CartId, CartItem cartItem);
-        void isValidCart(Cart cart);
-        Boolean isValidCartExist(Consumer consumer, long RestaurantId);
-        void inValidCart(Cart cart);
-        Cart getCartById(long CartId);
-        Cart saveCart(Cart cart);
-        Cart getCartByConsumerIdAndRestaurantId(long ConsumerId,long restaurantId);
-        void deleteAllCartItemByCartId(long cartId);
-        CartDto prepareCart(Consumer consumer, long RestaurantId, long MenuItemId);
-        Cart clearCartItemFromCart(long CartId);
+        Task<Cart> createCart(long restaurantId, Consumer consumer);
+        Task<CartDto> addItemToCart(long CartId, CartItem cartItem);
+        Task<CartDto> viewCart(long CartId);
+        Task<CartDto> removeItemFromCart(long CartId, CartItem cartItem);
+        Task isValidCart(Cart cart);
+        Task<Boolean> isValidCartExist(Consumer consumer, long RestaurantId);
+        Task inValidCart(Cart cart);
+        Task<Cart> getCartById(long CartId);
+        Task<Cart> saveCart(Cart cart);
+        Task<Cart> getCartByConsumerIdAndRestaurantId(long ConsumerId,long restaurantId);
+        Task deleteAllCartItemByCartId(long cartId);
+        Task<CartDto> prepareCart(Consumer consumer, long RestaurantId, long MenuItemId);
+        Task<Cart> clearCartItemFromCart(long CartId);
     }
 }

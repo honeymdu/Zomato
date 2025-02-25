@@ -35,9 +35,9 @@ namespace Zomato.Service.Impl
             return _context.User.ToList();
         }
 
-        public User GetUserByEmail(string email)
+        public Task<User> GetUserByEmail(string email)
         {
-            var user = _context.User.FirstOrDefault(u => u.email == email);
+            var user = _context.User.FirstOrDefaultAsync(u => u.email == email);
 
             if (user == null)
             {
@@ -47,9 +47,9 @@ namespace Zomato.Service.Impl
             return user;
         }
 
-        public User getUserFromId(long userId)
+        public async Task<User> getUserFromId(long userId)
         {
-            var user = _context.User.FirstOrDefault(u => u.id == userId);
+            var user = await _context.User.FirstOrDefaultAsync(u => u.id == userId);
 
             if (user == null)
             {
@@ -59,7 +59,7 @@ namespace Zomato.Service.Impl
             return user;
         }
 
-        public User save(User user)
+        public Task<User> save(User user)
         {
             _context.User.Add(user);
             _context.SaveChanges();

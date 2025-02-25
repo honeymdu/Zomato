@@ -5,7 +5,7 @@ namespace Zomato.Service
 {
     public interface ICartItemService
     {
-        CartItem getCartItemById(long cartItemId);
+        Task<CartItem> getCartItemById(long cartItemId);
 
         CartItem createNewCartItem(MenuItem menuItem, Cart cart);
 
@@ -15,11 +15,11 @@ namespace Zomato.Service
 
         void removeCartItemFromCart(CartItem cartItem);
 
-        Boolean isCartItemExist(CartItem cartItem);
+        Task<Boolean> isCartItemExist(CartItem cartItem);
 
         CartItem getCartItemByMenuItemAndCart(MenuItem menuItem, Cart cart);
 
-        List<CartItem> getAllCartItemsByCartId(long cartId);
+        Task<List<CartItem>> getAllCartItemsByCartId(long cartId);
 
         Boolean isMenuItemExistInCart(MenuItem menuItem, Cart cart);
     }

@@ -9,7 +9,7 @@ namespace Zomato.Service
         Task AssignDeliveryPartnerAsync();
 
         Task<DeliveryRequest> CreateDeliveryRequestAsync(Order order);
-        DeliveryRequest getDeliveryRequestByOrderId(long id);
+        Task<DeliveryRequest> getDeliveryRequestByOrderId(long id);
         Task<DeliveryRequest> GetDeliveryRequestByOrderIdAsync(long orderId);
     }
 }
