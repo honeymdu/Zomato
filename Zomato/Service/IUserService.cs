@@ -6,9 +6,9 @@ namespace Zomato.Service
     public interface IUserService
     {
         Task<User> GetUserByEmail(string email);
-        IEnumerable<User> GetAllUsersAsync();
+        Task<IEnumerable<User>> GetAllUsersAsync();
         Task<User> getUserFromId(long userId);
         Task<User> save(User user);
-        Boolean existsById(long userId);
+        Task<Boolean> existsById(long userId);
     }
 }

@@ -6,11 +6,11 @@ namespace Zomato.Service
 
     public interface IPaymentService
     {
-        public void processPayment(Order order);
+        public Task processPayment(Order order);
 
-        public Payment CreateNewPayment(Order order);
+        public Task<Payment> CreateNewPayment(Order order);
 
-        public void updatePaymentStatus(Payment payment, PaymentStatus status);
+        public Task updatePaymentStatus(Payment payment, PaymentStatus status);
 
     }
 }

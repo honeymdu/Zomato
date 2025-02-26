@@ -1,4 +1,5 @@
-﻿using Zomato.Data;
+﻿using System.Threading.Tasks;
+using Zomato.Data;
 using Zomato.Entity;
 using Zomato.Entity.Enum;
 using Zomato.Service;
@@ -20,17 +21,18 @@ namespace Zomato.Strategies.Impl
             this.deliveryService = deliveryService;
         }
 
-        public void ProcessPayment(Payment payment)
+        public async Task ProcessPayment(Payment payment)
         {
-            DeliveryPartner deliveryPartner = deliveryService.getDeliveryRequestByOrderId(payment.order.id).deliveryPartner;
+            var deliveryRequest = await deliveryService.getDeliveryRequestByOrderId(payment.order.id);
+            var deliveryPartner = deliveryRequest.deliveryPartner;
             // Wallet driverwallet = walletService.findWalletById(driver.getId());
             Double platform_commission = payment.amount * PLATFORM_COMMISSION;
-            walletService.deductMoneyFromWallet(deliveryPartner.user, platform_commission, null, payment.order,
+            await walletService.deductMoneyFromWallet(deliveryPartner.user, platform_commission, null, payment.order,
                     TransactionMethod.ORDER);
 
             payment.paymentStatus =PaymentStatus.CONFIRMED;
             _context.Payment.Add(payment);
-            _context.SaveChanges();        
+           await _context.SaveChangesAsync();        
         }
     }
 }

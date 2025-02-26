@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Zomato.Data;
 using Zomato.Dto;
 using Zomato.Entity;
@@ -17,22 +19,24 @@ namespace Zomato.Service.Impl
             _mapper = mapper;
         }
 
-        public Menu addMenuItem(long RestaurantId, MenuItemDto menuItemDto)
+        public async Task<Menu> addMenuItem(long RestaurantId, MenuItemDto menuItemDto)
         {
             MenuItem menuItem = _mapper.Map<MenuItem>(menuItemDto);
-            if (checkMenuItemExistByName(RestaurantId, menuItem)) {
+            if (await checkMenuItemExistByName(RestaurantId, menuItem)) {
             throw new RuntimeConfilictException("Menu Item already exist with Menu Item Name " + menuItem.name);
             }
-            Menu menu = getMenuByRestaurant(RestaurantId);
+            Menu menu = await getMenuByRestaurant(RestaurantId);
             menuItem.menu = menu;
             menuItem.rating = 0.0;
             _context.MenuItem.Add(menuItem);
-           return _context.Menu.Update(menu).Entity;
+            _context.Menu.Update(menu);
+            await _context.SaveChangesAsync();
+            return menu;
         }
 
-        public bool checkMenuItemExistByName(long RestaurantId, MenuItem MenuItem)
+        public async Task<bool> checkMenuItemExistByName(long RestaurantId, MenuItem MenuItem)
         {
-            Menu menu = getMenuByRestaurant(RestaurantId);
+            Menu menu = await getMenuByRestaurant(RestaurantId);
             List<MenuItem> menuItems = menu.menuItems;
             foreach (MenuItem menuItem in menuItems)
             {
@@ -44,7 +48,7 @@ namespace Zomato.Service.Impl
             return false;
         }
 
-        public Menu CreateMenu(CreateMenu createMenu)
+        public async Task<Menu> CreateMenu(CreateMenu createMenu)
         {
             List<MenuItem> menuItems = _mapper.Map<List<MenuItem>>(createMenu.menuItem);
 
@@ -57,23 +61,23 @@ namespace Zomato.Service.Impl
             };
 
             _context.Add(menu);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return menu;
         }
 
-        public Menu getMenuById(long MenuId)
+        public async Task<Menu> getMenuById(long MenuId)
         {
-            return _context.Menu.Find(MenuId) ?? throw new ResourceNotFoundException("Menu Not found");
+            return await _context.Menu.FindAsync(MenuId) ?? throw new ResourceNotFoundException("Menu Not found");
         }
 
-        public Menu getMenuByRestaurant(long RestaurantId)
+        public async Task<Menu> getMenuByRestaurant(long RestaurantId)
         {
-            return _context.Menu.Where(m =>m.restaurant.id == RestaurantId).FirstOrDefault() ?? throw new ResourceNotFoundException("Menu Not found");
+            return await _context.Menu.Where(m =>m.restaurant.id == RestaurantId).FirstOrDefaultAsync() ?? throw new ResourceNotFoundException("Menu Not found");
         }
 
-        public MenuItem getMenuItemById(long RestaurantId, long MenuItemId)
+        public async Task<MenuItem> getMenuItemById(long RestaurantId, long MenuItemId)
         {
-            Menu menu = getMenuByRestaurant(RestaurantId);
+            Menu menu = await getMenuByRestaurant(RestaurantId);
             List<MenuItem> menuItems = menu.menuItems;
             foreach (MenuItem menuItem in menuItems)
             {
@@ -86,9 +90,9 @@ namespace Zomato.Service.Impl
 
         }
 
-        public bool removeMenuItem(long RestaurantId, long MenuItemId)
+        public async Task<bool> removeMenuItem(long RestaurantId, long MenuItemId)
         {
-            Menu menu = getMenuByRestaurant(RestaurantId);
+            Menu menu = await getMenuByRestaurant(RestaurantId);
             List<MenuItem> menuItems = menu.menuItems;
             foreach (MenuItem menuItem in menuItems)
             {
@@ -102,9 +106,9 @@ namespace Zomato.Service.Impl
             throw new ResourceNotFoundException("Menu Item Not Exist by Menu Item Id =" + MenuItemId);
         }
 
-        public bool setMenuItemStatus(long RestaurantId, long menuItemId, bool isAvailable)
+        public async Task<bool> setMenuItemStatus(long RestaurantId, long menuItemId, bool isAvailable)
         {
-            Menu menu = getMenuByRestaurant(RestaurantId);
+            Menu menu = await getMenuByRestaurant(RestaurantId);
             List<MenuItem> menuItems = menu.menuItems;
             foreach (MenuItem menuItem in menuItems)
             {

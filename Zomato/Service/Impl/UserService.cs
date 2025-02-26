@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.OpenApi.Expressions;
@@ -19,9 +20,9 @@ namespace Zomato.Service.Impl
             _config = config;
         }
 
-        public bool existsById(long userId)
+        public async Task<bool> existsById(long userId)
         {
-            var user = _context.User.FirstOrDefault(u => u.id == userId);
+            var user = await _context.User.FirstOrDefaultAsync(u => u.id == userId);
 
             if (user == null)
             {
@@ -30,14 +31,14 @@ namespace Zomato.Service.Impl
             return true;
         }
 
-        public IEnumerable<User> GetAllUsersAsync()
+        public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
-            return _context.User.ToList();
+            return await _context.User.ToListAsync();
         }
 
-        public Task<User> GetUserByEmail(string email)
+        public async Task<User> GetUserByEmail(string email)
         {
-            var user = _context.User.FirstOrDefaultAsync(u => u.email == email);
+            var user = await _context.User.FirstOrDefaultAsync(u => u.email == email);
 
             if (user == null)
             {
@@ -59,11 +60,11 @@ namespace Zomato.Service.Impl
             return user;
         }
 
-        public Task<User> save(User user)
+        public async Task<User> save(User user)
         {
             _context.User.Add(user);
-            _context.SaveChanges();
-            return GetUserByEmail(user.email);
+           await _context.SaveChangesAsync();
+            return await GetUserByEmail(user.email);
         }
     }
 }

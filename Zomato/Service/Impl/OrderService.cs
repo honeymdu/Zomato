@@ -20,20 +20,22 @@ namespace Zomato.Service.Impl
             this._mapper = mapper;
         }
 
-        public Order cancelOrder(long OrderId)
+        public async Task<Order> cancelOrder(long OrderId)
         {
-            Order order = getOrderById(OrderId);
+            Order order = await getOrderById(OrderId);
             if (order.orderStatus.Equals(OrderStatus.ACCEPTED))
             {
                 order.orderStatus = OrderStatus.CANCELLED;
-               return _context.Order.Update(order).Entity;
+               _context.Order.Update(order);
+               await _context.SaveChangesAsync();
+                return order;
 
             }
             throw new Exception("Can not cancel order as OrderRequest status is not Accepted earlier");
 
         }
 
-        public Order createOrder(OrderRequests orderRequests)
+        public async Task<Order> createOrder(OrderRequests orderRequests)
         {
             if (orderRequests.orderRequestStatus.Equals(OrderRequestStatus.ACCEPTED))
             {
@@ -50,15 +52,15 @@ namespace Zomato.Service.Impl
                 order.orderItems = orderItems;
                 order.orderStatus =OrderStatus.ACCEPTED;
                 _context.Order.Add(order);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return order;
             }
             throw new Exception("Can not create order as OrderRequest status is not Accepted");
         }
 
-        public Order getOrderById(long OrderId)
+        public async Task<Order> getOrderById(long OrderId)
         {
-        return _context.Order.Find(OrderId) ?? throw new ResourceNotFoundException("Order Not Found with Id" + OrderId);
+        return await _context.Order.FindAsync(OrderId) ?? throw new ResourceNotFoundException("Order Not Found with Id" + OrderId);
         }
 
         public async Task<Order> GetOrderByIdAsync(long orderId)
@@ -68,18 +70,20 @@ namespace Zomato.Service.Impl
         }
 
 
-        public Order saveOrder(Order order)
+        public async Task<Order> saveOrder(Order order)
         {
             _context.Order.Add(order);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return order;
         }
 
-        public Order updateOrderStatus(long OrderId, OrderStatus orderStatus)
+        public async Task<Order> updateOrderStatus(long OrderId, OrderStatus orderStatus)
         {
-                Order order = getOrderById(OrderId);
-                order.orderStatus = orderStatus;
-                return _context.Update(order).Entity;
+            Order order = await getOrderById(OrderId);
+            order.orderStatus = orderStatus;
+            _context.Update(order);
+            await _context.SaveChangesAsync();
+            return order;
         }
 
     }

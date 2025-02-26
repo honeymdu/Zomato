@@ -6,15 +6,15 @@ namespace Zomato.Service
 {
     public interface IAdminService
     {
-        RestaurantPartnerDto onBoardNewRestaurantPartner(long UserId,
+        Task<RestaurantPartnerDto> onBoardNewRestaurantPartner(long UserId,
             OnBoardRestaurantPartnerDto onBoardRestaurantPartnerDto);
 
-        DeliveryPartnerDto onBoardDeliveryPartner(long UserId, OnBoardDeliveryPartnerDto onBoardDeliveryPartnerDto);
+        Task<DeliveryPartnerDto> onBoardDeliveryPartner(long UserId, OnBoardDeliveryPartnerDto onBoardDeliveryPartnerDto);
 
-        Page<RestaurantDto> getAllRestaurant(PageRequest pageRequest);
+        Task<Page<RestaurantDto>> getAllRestaurant(PageRequest pageRequest);
 
-        Page<DeliveryPartnerDto> getAllDeliveryPartner(PageRequest pageRequest);
+        Task<Page<DeliveryPartnerDto>> getAllDeliveryPartner(PageRequest pageRequest);
 
-        Boolean varifyRestaurant(long restaurantId);
+        Task<Boolean> varifyRestaurant(long restaurantId);
     }
 }

@@ -4,6 +4,6 @@ namespace Zomato.Service
 {
     public interface IDistanceService
     {
-        double CalculateDistance(Point src, Point dest);
+        Task<double> CalculateDistance(Point src, Point dest);
     }
 }

@@ -24,9 +24,9 @@ namespace Zomato.Service
 
         List<WalletTransaction> getAllMyWalletTransactions(long restaurantId);
 
-        RestaurantPartner createNewRestaurantPartner(RestaurantPartner restaurantPartner);
+        Task<RestaurantPartner> createNewRestaurantPartner(RestaurantPartner restaurantPartner);
 
-        Restaurant ViewMyRestaurantProfile(long RestaurantId);
+        Task<Restaurant> ViewMyRestaurantProfile(long RestaurantId);
 
         List<OrderRequests> viewOrderRequestsByRestaurantId(long RestaurantId);
 

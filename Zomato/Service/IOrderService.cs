@@ -6,17 +6,17 @@ namespace Zomato.Service
     public interface IOrderService
     {
 
-        Order updateOrderStatus(long OrderId, OrderStatus orderStatus);
+        Task<Order> updateOrderStatus(long OrderId, OrderStatus orderStatus);
 
-        Order getOrderById(long OrderId);
+        Task<Order> getOrderById(long OrderId);
 
         Task<Order> GetOrderByIdAsync(long orderId);
 
-        Order createOrder(OrderRequests orderRequests);
+        Task<Order> createOrder(OrderRequests orderRequests);
 
-        Order cancelOrder(long OrderId);
+        Task<Order> cancelOrder(long OrderId);
 
-        Order saveOrder(Order order);
+        Task<Order> saveOrder(Order order);
 
     }
 }

@@ -8,19 +8,19 @@ namespace Zomato.Service
     public interface IWalletService
     {
 
-        WalletDto addMoneyToWallet(User user, Double drivercut, String transactionId, Order order,
+        Task<WalletDto> addMoneyToWallet(User user, Double drivercut, String transactionId, Order order,
                         TransactionMethod transactionMethod);
 
-        Wallet deductMoneyFromWallet(User user, Double platform_commission, String transactionId, Order order,
+        Task<Wallet> deductMoneyFromWallet(User user, Double amount, String transactionId, Order order,
                         TransactionMethod transactionMethod);
 
-        void withdrawAllMyMoneyFromWallet();
+        Task withdrawAllMyMoneyFromWallet();
 
-        Wallet findWalletById(long WalletId);
+        Task<Wallet> findWalletById(long WalletId);
 
-        WalletDto createNewWallet(User user);
+        Task<WalletDto> createNewWallet(User user);
 
-        Wallet findWalletByUser(User user);
+        Task<Wallet> findWalletByUser(User user);
 
     }
 }

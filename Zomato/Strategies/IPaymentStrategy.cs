@@ -4,6 +4,6 @@ namespace Zomato.Strategies
 {
     public interface IPaymentStrategy
     {
-        void ProcessPayment(Payment payment);
+        Task ProcessPayment(Payment payment);
     }
 }

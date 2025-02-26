@@ -5,6 +5,6 @@ namespace Zomato.Strategies
 {
     public interface IDeliveryPartnerMatchingStrategy
     {
-        List<DeliveryPartner> findMatchingDeliveryPartner(DeliveryFareGetDto deliveryFareGetDto);
+        Task<List<DeliveryPartner>> findMatchingDeliveryPartner(DeliveryFareGetDto deliveryFareGetDto);
     }
 }

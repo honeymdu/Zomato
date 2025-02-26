@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Zomato.Data;
 using Zomato.Dto;
 using Zomato.Entity;
@@ -14,14 +15,14 @@ namespace Zomato.Strategies.Impl
             _context = context;
         }
 
-        public List<DeliveryPartner> findMatchingDeliveryPartner(DeliveryFareGetDto deliveryFareGetDto)
+        public async Task<List<DeliveryPartner>> findMatchingDeliveryPartner(DeliveryFareGetDto deliveryFareGetDto)
         {
-            return _context.DeliveryPartner
+            return await _context.DeliveryPartner
                 .FromSqlRaw(@"SELECT TOP 10 d.* 
                       FROM delivery_partner d 
                       WHERE d.available = 1 
                       ORDER BY d.current_location.STDistance(@p0)", deliveryFareGetDto.PickupLocation)
-                .ToList();
+                .ToListAsync();
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Cors.Infrastructure;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using NetTopologySuite.Geometries;
 using Zomato.Data;
 using Zomato.Dto;
@@ -23,22 +25,22 @@ namespace Zomato.Service.Impl
             this.deliveryStrategyManager = deliveryStrategyManager;
         }
 
-        public List<OrderRequests> getAllOrderRequestByRestaurantId(long restaurantId)
+        public async Task<List<OrderRequests>> getAllOrderRequestByRestaurantId(long restaurantId)
         {
-            return _context.OrderRequest.Where(o => o.restaurant.id == restaurantId && o.orderRequestStatus == OrderRequestStatus.PENDING).ToList();
+            return await _context.OrderRequest.Where(o => o.restaurant.id == restaurantId && o.orderRequestStatus == OrderRequestStatus.PENDING).ToListAsync();
         }
 
-        public OrderRequests getOrderRequestById(long OrderRequestId)
+        public async Task<OrderRequests> getOrderRequestById(long OrderRequestId)
         {
-            var orderRequest = _context.OrderRequest.SingleOrDefault(o => o.id == OrderRequestId);
+            var orderRequest = await _context.OrderRequest.SingleOrDefaultAsync(o => o.id == OrderRequestId);
 
             return orderRequest ?? throw new ResourceNotFoundException($"Cart not found with ID = {OrderRequestId}");
         }
 
-        public OrderRequests OrderRequest(long CartId, PaymentMethod paymentMethod, Point UserLocation)
+        public async Task<OrderRequests> OrderRequest(long CartId, PaymentMethod paymentMethod, Point UserLocation)
         {
-            Cart cart = cartService.getCartById(CartId);
-            cartService.isValidCart(cart);
+            Cart cart = await cartService.getCartById(CartId);
+            await cartService.isValidCart(cart);
             IDeliveryFareCalculationStrategy deliveryFareCalculationStrategy = deliveryStrategyManager.GetDeliveryFareCalculationStrategy();
             DeliveryFareGetDto deliveryFareGetDto = new DeliveryFareGetDto()
             {
@@ -60,20 +62,20 @@ namespace Zomato.Service.Impl
             };
             // Send Notification to Corresponding restaurant
 
-            OrderRequests savedOrderRequests = save(orderRequests);
-            cartService.inValidCart(cart);
+            OrderRequests savedOrderRequests = await save(orderRequests);
+           await cartService.inValidCart(cart);
             return savedOrderRequests;
         }
 
-        public OrderRequests prePaidOrderRequest(long CartId, PaymentMethod paymentMethod, Point UserLocation)
+        public async Task<OrderRequests> prePaidOrderRequest(long CartId, PaymentMethod paymentMethod, Point UserLocation)
         {
             throw new NotImplementedException();
         }
 
-        public OrderRequests save(OrderRequests orderRequests)
+        public async Task<OrderRequests> save(OrderRequests orderRequests)
         {
             _context.OrderRequest.Add(orderRequests);
-            _context.SaveChanges();
+           await _context.SaveChangesAsync();
             return orderRequests;
         }
     }

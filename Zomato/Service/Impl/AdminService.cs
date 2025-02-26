@@ -27,12 +27,12 @@ namespace Zomato.Service.Impl
             this.deliveryPartnerService = deliveryPartnerService;
         }
 
-        public Page<DeliveryPartnerDto> getAllDeliveryPartner(PageRequest pageRequest)
+        public Task<Page<DeliveryPartnerDto>> getAllDeliveryPartner(PageRequest pageRequest)
         {
             throw new NotImplementedException();
         }
 
-        public Page<RestaurantDto> getAllRestaurant(PageRequest pageRequest)
+        public Task<Page<RestaurantDto>> getAllRestaurant(PageRequest pageRequest)
         {
             throw new NotImplementedException();
         }
@@ -73,21 +73,21 @@ namespace Zomato.Service.Impl
             var restaurantPartner = _mapper.Map<RestaurantPartner>(onBoardRestaurantPartnerDto);
             restaurantPartner.user = user;
 
-            var savedRestaurantPartner = await restaurantPartnerService.CreateNewRestaurantPartnerAsync(restaurantPartner);
+            var savedRestaurantPartner = await restaurantPartnerService.createNewRestaurantPartner(restaurantPartner);
 
             return _mapper.Map<RestaurantPartnerDto>(savedRestaurantPartner);
         }
 
-        public Task<bool> varifyRestaurant(long restaurantId)
+        public async Task<bool> varifyRestaurant(long restaurantId)
         {
-            Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
+            Restaurant restaurant = await restaurantService.getRestaurantById(restaurantId);
             // check if already varified.
             if (restaurant.isVarified)
             {
                 throw new RuntimeConfilictException("Restaurant is Already Varified with Restaurant Id = " + restaurantId);
             }
             restaurant.isVarified = true;
-            restaurantService.save(restaurant);
+            await restaurantService.save(restaurant);
             return true;
         }
     }
