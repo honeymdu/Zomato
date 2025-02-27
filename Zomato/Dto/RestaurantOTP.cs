@@ -3,7 +3,7 @@
     public class RestaurantOTP
     {
 
-        private String restaurantOTP { get; set; }
+        public String restaurantOTP { get; set; }
 
     }
 }

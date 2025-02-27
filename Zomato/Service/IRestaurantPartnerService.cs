@@ -8,31 +8,31 @@ namespace Zomato.Service
     public interface IRestaurantPartnerService
     {
 
-        RestaurantDto createRestaurant(AddNewRestaurantDto addNewRestaurantDto);
+        Task<RestaurantDto> createRestaurant(AddNewRestaurantDto addNewRestaurantDto);
 
-        Menu CreateMenu(CreateMenu createMenu);
+        Task<Menu> CreateMenu(CreateMenu createMenu);
 
-        Order acceptOrderRequest(long orderRequestId);
+        Task<Order> acceptOrderRequest(long orderRequestId);
 
-        OrderRequestsDto cancelOrderRequest(long orderRequestId);
+        Task<OrderRequestsDto> cancelOrderRequest(long orderRequestId);
 
-        Menu updateMenuItemOfMenu(MenuItemDto menuItemDto);
+        Task<Menu> updateMenuItemOfMenu(MenuItemDto menuItemDto);
 
-        RestaurantPartner getCurrentRestaurantPartner();
+        Task<RestaurantPartner> getCurrentRestaurantPartner();
 
-        Menu addMenuItemToMenu(MenuItemDto menuItemDto, long restaurantId);
+        Task<Menu> addMenuItemToMenu(MenuItemDto menuItemDto, long restaurantId);
 
-        List<WalletTransaction> getAllMyWalletTransactions(long restaurantId);
+        Task<List<WalletTransaction>> getAllMyWalletTransactions(long restaurantId);
 
         Task<RestaurantPartner> createNewRestaurantPartner(RestaurantPartner restaurantPartner);
 
         Task<Restaurant> ViewMyRestaurantProfile(long RestaurantId);
 
-        List<OrderRequests> viewOrderRequestsByRestaurantId(long RestaurantId);
+        Task<List<OrderRequests>> viewOrderRequestsByRestaurantId(long RestaurantId);
 
-        Menu viewMenuByRestaurantId(long RestaurantId);
+        Task<Menu> viewMenuByRestaurantId(long RestaurantId);
 
-        Order updateOrderStatus(long OrderId, OrderStatus orderStatus);
+        Task<Order> updateOrderStatus(long OrderId, OrderStatus orderStatus);
 
         // RestaurantDto updateRestaurantStatus(RestaurantStatusDto restaurantStatusDto,
         // Long restaurantId);
@@ -46,6 +46,6 @@ namespace Zomato.Service
 
         // List<Order> getALlOrders(Long restaurantId);
 
-        RestaurantOTP getRestaurantOTPByOrderId(long OrderId);
+        Task<RestaurantOTP> getRestaurantOTPByOrderId(long OrderId);
     }
 }
