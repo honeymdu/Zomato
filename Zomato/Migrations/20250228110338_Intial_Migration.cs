@@ -7,7 +7,7 @@ using NetTopologySuite.Geometries;
 namespace Zomato.Migrations
 {
     /// <inheritdoc />
-    public partial class Inital_Migration : Migration
+    public partial class Intial_Migration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

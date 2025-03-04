@@ -1,4 +1,7 @@
-﻿using System.Text.Json;
+﻿using System.IO;
+using System.Text.Json;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Zomato.Advices
 {
@@ -19,19 +22,31 @@ namespace Zomato.Advices
 
             await _next(context);
 
-            context.Response.Body = originalBodyStream;
+            // Reset stream position before reading
             newBodyStream.Seek(0, SeekOrigin.Begin);
             var responseBody = await new StreamReader(newBodyStream).ReadToEndAsync();
 
+            // Restore original body stream
+            context.Response.Body = originalBodyStream;
+
             if (!string.IsNullOrEmpty(responseBody))
             {
-                var wrappedResponse = new ApiResponse<string>(responseBody, "Request processed successfully", true);
-                var jsonResponse = JsonSerializer.Serialize(wrappedResponse);
+                object? parsedBody;
+                try
+                {
+                    parsedBody = JsonSerializer.Deserialize<object>(responseBody, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                }
+                catch
+                {
+                    parsedBody = responseBody; 
+                }
+
+                var wrappedResponse = new ApiResponse<object>(parsedBody, "Request processed successfully", true);
+                var jsonResponse = JsonSerializer.Serialize(wrappedResponse, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
 
                 context.Response.ContentType = "application/json";
                 await context.Response.WriteAsync(jsonResponse);
             }
         }
     }
-
 }

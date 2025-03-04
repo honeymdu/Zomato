@@ -4,6 +4,6 @@ namespace Zomato.Strategies
 {
     public interface IDeliveryFareCalculationStrategy
     {
-         Double calculateDeliveryFees(DeliveryFareGetDto deliveryFareGetDto);
+         Task<Double> calculateDeliveryFees(DeliveryFareGetDto deliveryFareGetDto);
     }
 }

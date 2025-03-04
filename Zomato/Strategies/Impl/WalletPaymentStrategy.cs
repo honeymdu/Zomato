@@ -2,17 +2,18 @@
 using Zomato.Data;
 using Zomato.Entity;
 using Zomato.Entity.Enum;
+using Zomato.Service;
 using Zomato.Service.Impl;
 
 namespace Zomato.Strategies.Impl
 {
     public class WalletPaymentStrategy : IPaymentStrategy
     {
-        private readonly WalletService walletService;
+        private readonly IWalletService walletService;
         private readonly AppDbContext _context;
         private const double PLATFORM_COMMISSION = 10.5;
 
-        public WalletPaymentStrategy(WalletService walletService, AppDbContext context)
+        public WalletPaymentStrategy(IWalletService walletService, AppDbContext context)
         {
             this.walletService = walletService;
             _context = context;

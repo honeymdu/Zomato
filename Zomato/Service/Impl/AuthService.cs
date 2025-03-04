@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Zomato.Entity;
 using Zomato.Entity.Enum;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace Zomato.Service
 {
@@ -18,26 +19,27 @@ namespace Zomato.Service
         private readonly AppDbContext _context;
         private readonly IConfiguration _config;
         private readonly ITokenService tokenService;
+        private readonly IMapper _mapper;
 
-        public AuthService(AppDbContext context, IConfiguration config, ITokenService tokenService)
+        public AuthService(AppDbContext context, IConfiguration config, ITokenService tokenService,IMapper mapper)
         {
             _context = context;
             _config = config;
             this.tokenService = tokenService;
+            this._mapper = mapper;
+
         }
 
         public async Task<string[]> login(string email, string password)
         {
-            var user = _context.User.FirstOrDefault(u => u.email == email);
+            var user = await _context.User.FirstOrDefaultAsync(u => u.email == email);
             if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.password))
             {
                 throw new UnauthorizedAccessException("Invalid email or password.");
             }
 
             var accessToken = GenerateJwtToken(user);
-       
-           await _context.SaveChangesAsync();
-
+      
             return new string[] { accessToken };
         }
 
@@ -48,6 +50,22 @@ namespace Zomato.Service
 
         public async Task<UserDto> SignUp(SignUpDto signupDto)
         {
+            if (signupDto == null)
+            {
+                throw new ArgumentNullException(nameof(signupDto), "Signup data cannot be null.");
+            }
+
+            if (string.IsNullOrWhiteSpace(signupDto.password))
+            {
+                throw new ArgumentException("Password cannot be empty.", nameof(signupDto.password));
+            }
+
+            var existingUser = await _context.User.FirstOrDefaultAsync(u => u.email == signupDto.email);
+            if (existingUser != null)
+            {
+                throw new InvalidOperationException("User with this email already exists.");
+            }
+
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(signupDto.password);
 
             var user = new User
@@ -60,11 +78,14 @@ namespace Zomato.Service
             };
 
             _context.User.Add(user);
-            await _context.SaveChangesAsync();
+            int savedRows = await _context.SaveChangesAsync();
 
-            return new UserDto { name = user.name, email = user.email, role = user.role ,contact = user.contact};
+            if (savedRows == 0)
+            {
+                throw new Exception("User registration failed. No records were saved.");
+            }
 
-
+            return _mapper.Map<UserDto>(user);
         }
 
         public string refreshToken(string refreshToken)

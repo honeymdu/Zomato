@@ -137,13 +137,13 @@ namespace Zomato.Service.Impl
             if (!isValidCart)
             {
                 var _cart = await createCart(RestaurantId, consumer);
-                var _menuItem = menuService.getMenuItemById(RestaurantId, MenuItemId);
+                var _menuItem = await menuService.getMenuItemById(RestaurantId, MenuItemId);
                 var _cartItem = cartItemService.createNewCartItem(_menuItem, _cart);
                 return await addItemToCart(_cart.id, _cartItem);
             }
 
             var cart = await getCartByConsumerIdAndRestaurantId(consumer.id, RestaurantId);
-            MenuItem menuItem = menuService.getMenuItemById(RestaurantId, MenuItemId);
+            MenuItem menuItem = await menuService.getMenuItemById(RestaurantId, MenuItemId);
 
             if (cartItemService.isMenuItemExistInCart(menuItem, cart))
             {

@@ -32,22 +32,27 @@
             }
         }
 
-        private static async Task HandleExceptionAsync(HttpContext context, Exception exception)
+        private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            context.Response.ContentType = "application/json";
+            _logger.LogError(exception, "Exception occurred: {Message}", exception.Message);
+
+            if (context.Response.HasStarted)
+            {
+                _logger.LogWarning("Response has already started, skipping exception handling.");
+                return;
+            }
 
             var statusCode = exception switch
             {
-                KeyNotFoundException => (int)HttpStatusCode.NotFound, // 404
-                UnauthorizedAccessException => (int)HttpStatusCode.Unauthorized, // 401
-                ArgumentException => (int)HttpStatusCode.BadRequest, // 400
+                KeyNotFoundException => (int)HttpStatusCode.NotFound,
+                UnauthorizedAccessException => (int)HttpStatusCode.Unauthorized,
+                ArgumentException => (int)HttpStatusCode.BadRequest,
                 IllegalArgumentException => (int)HttpStatusCode.NoContent,
                 ResourceNotFoundException => (int)HttpStatusCode.NotFound,
-                RuntimeConfilictException => (int) HttpStatusCode.Conflict,
-                UserNotFoundException => (int) HttpStatusCode.Unauthorized,
-                InvalidCartException => (int) HttpStatusCode.BadRequest,
-                _ => (int)HttpStatusCode.InternalServerError, // 500
-                
+                RuntimeConfilictException => (int)HttpStatusCode.Conflict,
+                UserNotFoundException => (int)HttpStatusCode.Unauthorized,
+                InvalidCartException => (int)HttpStatusCode.BadRequest,
+                _ => (int)HttpStatusCode.InternalServerError,
             };
 
             var response = new
@@ -57,8 +62,15 @@
                 details = exception.InnerException?.Message
             };
 
+            var jsonResponse = JsonSerializer.Serialize(response, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
+            });
+
+            context.Response.ContentType = "application/json";
             context.Response.StatusCode = statusCode;
-            await context.Response.WriteAsync(JsonSerializer.Serialize(response));
+            await context.Response.WriteAsync(jsonResponse);
         }
     }
 

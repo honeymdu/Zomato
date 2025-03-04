@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Zomato.Dto;
 using Zomato.Service;
@@ -17,11 +18,11 @@ namespace Zomato.Controllers
         }
         [AllowAnonymous]
         [HttpPost("login")]
-        public ActionResult<LoginResponceDto> Login([FromBody] LoginRequestDto loginRequestDto)
+        public async Task<ActionResult<LoginResponceDto>> Login([FromBody] LoginRequestDto loginRequestDto)
         {
             try
             {
-                var tokens = _authService.login(loginRequestDto.email, loginRequestDto.password);
+                var tokens = await _authService.login(loginRequestDto.email, loginRequestDto.password);
                 return Ok(new LoginResponceDto { accessToken = tokens[0] });
             }
             catch (UnauthorizedAccessException)
@@ -31,11 +32,11 @@ namespace Zomato.Controllers
         }
         [AllowAnonymous]
         [HttpPost("signup")]
-        public IActionResult SignUp([FromBody] SignUpDto signUpDto)
+        public async Task<IActionResult> SignUp([FromBody] SignUpDto signUpDto)
         {
             try
             {
-                var user = _authService.SignUp(signUpDto);
+                var user = await _authService.SignUp(signUpDto);
                 return Created("User Created", user);
             }
             catch (Exception ex)

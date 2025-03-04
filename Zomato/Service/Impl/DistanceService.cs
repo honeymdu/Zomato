@@ -2,12 +2,12 @@
 using Newtonsoft.Json;
 using Zomato.Service;
 
-public class DistanceServiceOSRMImpl: IDistanceService
+public class DistanceService: IDistanceService
 {
     private static readonly string OSRM_API_BASE_URL = "https://router.project-osrm.org/route/v1/driving/";
     private readonly HttpClient _httpClient;
 
-    public DistanceServiceOSRMImpl(HttpClient httpClient)
+    public DistanceService(HttpClient httpClient)
     {
         _httpClient = httpClient;
     }

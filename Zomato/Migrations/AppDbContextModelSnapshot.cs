@@ -23,7 +23,7 @@ namespace Zomato.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Zomato.Model.Address", b =>
+            modelBuilder.Entity("Zomato.Entity.Address", b =>
                 {
                     b.Property<long>("id")
                         .ValueGeneratedOnAdd()
@@ -57,7 +57,7 @@ namespace Zomato.Migrations
                     b.ToTable("Address");
                 });
 
-            modelBuilder.Entity("Zomato.Model.Cart", b =>
+            modelBuilder.Entity("Zomato.Entity.Cart", b =>
                 {
                     b.Property<long>("id")
                         .ValueGeneratedOnAdd()
@@ -86,7 +86,7 @@ namespace Zomato.Migrations
                     b.ToTable("Cart");
                 });
 
-            modelBuilder.Entity("Zomato.Model.CartItem", b =>
+            modelBuilder.Entity("Zomato.Entity.CartItem", b =>
                 {
                     b.Property<long>("id")
                         .ValueGeneratedOnAdd()
@@ -115,7 +115,7 @@ namespace Zomato.Migrations
                     b.ToTable("CartItem");
                 });
 
-            modelBuilder.Entity("Zomato.Model.Consumer", b =>
+            modelBuilder.Entity("Zomato.Entity.Consumer", b =>
                 {
                     b.Property<long>("id")
                         .ValueGeneratedOnAdd()
@@ -136,7 +136,7 @@ namespace Zomato.Migrations
                     b.ToTable("Consumer");
                 });
 
-            modelBuilder.Entity("Zomato.Model.DeliveryPartner", b =>
+            modelBuilder.Entity("Zomato.Entity.DeliveryPartner", b =>
                 {
                     b.Property<long>("id")
                         .ValueGeneratedOnAdd()
@@ -168,7 +168,7 @@ namespace Zomato.Migrations
                     b.ToTable("DeliveryPartner");
                 });
 
-            modelBuilder.Entity("Zomato.Model.DeliveryRequest", b =>
+            modelBuilder.Entity("Zomato.Entity.DeliveryRequest", b =>
                 {
                     b.Property<long>("id")
                         .ValueGeneratedOnAdd()
@@ -217,7 +217,7 @@ namespace Zomato.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Zomato.Model.Menu", b =>
+            modelBuilder.Entity("Zomato.Entity.Menu", b =>
                 {
                     b.Property<long>("id")
                         .ValueGeneratedOnAdd()
@@ -239,7 +239,7 @@ namespace Zomato.Migrations
                     b.ToTable("Menu");
                 });
 
-            modelBuilder.Entity("Zomato.Model.MenuItem", b =>
+            modelBuilder.Entity("Zomato.Entity.MenuItem", b =>
                 {
                     b.Property<long>("id")
                         .ValueGeneratedOnAdd()
@@ -289,7 +289,7 @@ namespace Zomato.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Zomato.Model.Order", b =>
+            modelBuilder.Entity("Zomato.Entity.Order", b =>
                 {
                     b.Property<long>("id")
                         .ValueGeneratedOnAdd()
@@ -352,7 +352,7 @@ namespace Zomato.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Zomato.Model.OrderItem", b =>
+            modelBuilder.Entity("Zomato.Entity.OrderItem", b =>
                 {
                     b.Property<long>("id")
                         .ValueGeneratedOnAdd()
@@ -381,7 +381,7 @@ namespace Zomato.Migrations
                     b.ToTable("OrderItem");
                 });
 
-            modelBuilder.Entity("Zomato.Model.OrderRequests", b =>
+            modelBuilder.Entity("Zomato.Entity.OrderRequests", b =>
                 {
                     b.Property<long>("id")
                         .ValueGeneratedOnAdd()
@@ -444,7 +444,7 @@ namespace Zomato.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Zomato.Model.Payment", b =>
+            modelBuilder.Entity("Zomato.Entity.Payment", b =>
                 {
                     b.Property<long>("id")
                         .ValueGeneratedOnAdd()
@@ -481,7 +481,7 @@ namespace Zomato.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Zomato.Model.Restaurant", b =>
+            modelBuilder.Entity("Zomato.Entity.Restaurant", b =>
                 {
                     b.Property<long>("id")
                         .ValueGeneratedOnAdd()
@@ -520,7 +520,7 @@ namespace Zomato.Migrations
                     b.ToTable("Restaurant");
                 });
 
-            modelBuilder.Entity("Zomato.Model.RestaurantPartner", b =>
+            modelBuilder.Entity("Zomato.Entity.RestaurantPartner", b =>
                 {
                     b.Property<long>("id")
                         .ValueGeneratedOnAdd()
@@ -541,7 +541,7 @@ namespace Zomato.Migrations
                     b.ToTable("RestaurantPartner");
                 });
 
-            modelBuilder.Entity("Zomato.Model.User", b =>
+            modelBuilder.Entity("Zomato.Entity.User", b =>
                 {
                     b.Property<long>("id")
                         .ValueGeneratedOnAdd()
@@ -577,7 +577,7 @@ namespace Zomato.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Zomato.Model.Wallet", b =>
+            modelBuilder.Entity("Zomato.Entity.Wallet", b =>
                 {
                     b.Property<long>("id")
                         .ValueGeneratedOnAdd()
@@ -598,7 +598,7 @@ namespace Zomato.Migrations
                     b.ToTable("Wallet");
                 });
 
-            modelBuilder.Entity("Zomato.Model.WalletTransaction", b =>
+            modelBuilder.Entity("Zomato.Entity.WalletTransaction", b =>
                 {
                     b.Property<long>("id")
                         .ValueGeneratedOnAdd()
@@ -644,23 +644,23 @@ namespace Zomato.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Zomato.Model.Address", b =>
+            modelBuilder.Entity("Zomato.Entity.Address", b =>
                 {
-                    b.HasOne("Zomato.Model.User", null)
+                    b.HasOne("Zomato.Entity.User", null)
                         .WithMany("addresses")
                         .HasForeignKey("Userid")
                         .OnDelete(DeleteBehavior.NoAction);
                 });
 
-            modelBuilder.Entity("Zomato.Model.Cart", b =>
+            modelBuilder.Entity("Zomato.Entity.Cart", b =>
                 {
-                    b.HasOne("Zomato.Model.Consumer", "consumer")
+                    b.HasOne("Zomato.Entity.Consumer", "consumer")
                         .WithMany()
                         .HasForeignKey("consumerid")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Zomato.Model.Restaurant", "restaurant")
+                    b.HasOne("Zomato.Entity.Restaurant", "restaurant")
                         .WithMany()
                         .HasForeignKey("restaurantid")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -671,15 +671,15 @@ namespace Zomato.Migrations
                     b.Navigation("restaurant");
                 });
 
-            modelBuilder.Entity("Zomato.Model.CartItem", b =>
+            modelBuilder.Entity("Zomato.Entity.CartItem", b =>
                 {
-                    b.HasOne("Zomato.Model.Cart", "cart")
+                    b.HasOne("Zomato.Entity.Cart", "cart")
                         .WithMany("cartItems")
                         .HasForeignKey("cartid")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Zomato.Model.MenuItem", "menuItem")
+                    b.HasOne("Zomato.Entity.MenuItem", "menuItem")
                         .WithMany()
                         .HasForeignKey("menuItemid")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -690,9 +690,9 @@ namespace Zomato.Migrations
                     b.Navigation("menuItem");
                 });
 
-            modelBuilder.Entity("Zomato.Model.Consumer", b =>
+            modelBuilder.Entity("Zomato.Entity.Consumer", b =>
                 {
-                    b.HasOne("Zomato.Model.User", "user")
+                    b.HasOne("Zomato.Entity.User", "user")
                         .WithMany()
                         .HasForeignKey("userid")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -701,9 +701,9 @@ namespace Zomato.Migrations
                     b.Navigation("user");
                 });
 
-            modelBuilder.Entity("Zomato.Model.DeliveryPartner", b =>
+            modelBuilder.Entity("Zomato.Entity.DeliveryPartner", b =>
                 {
-                    b.HasOne("Zomato.Model.User", "user")
+                    b.HasOne("Zomato.Entity.User", "user")
                         .WithMany()
                         .HasForeignKey("userid")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -712,15 +712,15 @@ namespace Zomato.Migrations
                     b.Navigation("user");
                 });
 
-            modelBuilder.Entity("Zomato.Model.DeliveryRequest", b =>
+            modelBuilder.Entity("Zomato.Entity.DeliveryRequest", b =>
                 {
-                    b.HasOne("Zomato.Model.DeliveryPartner", "deliveryPartner")
+                    b.HasOne("Zomato.Entity.DeliveryPartner", "deliveryPartner")
                         .WithMany("deliveryRequest")
                         .HasForeignKey("deliveryPartnerid")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Zomato.Model.Order", "order")
+                    b.HasOne("Zomato.Entity.Order", "order")
                         .WithMany()
                         .HasForeignKey("orderid")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -731,9 +731,9 @@ namespace Zomato.Migrations
                     b.Navigation("order");
                 });
 
-            modelBuilder.Entity("Zomato.Model.Menu", b =>
+            modelBuilder.Entity("Zomato.Entity.Menu", b =>
                 {
-                    b.HasOne("Zomato.Model.Restaurant", "restaurant")
+                    b.HasOne("Zomato.Entity.Restaurant", "restaurant")
                         .WithMany()
                         .HasForeignKey("restaurantid")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -742,9 +742,9 @@ namespace Zomato.Migrations
                     b.Navigation("restaurant");
                 });
 
-            modelBuilder.Entity("Zomato.Model.MenuItem", b =>
+            modelBuilder.Entity("Zomato.Entity.MenuItem", b =>
                 {
-                    b.HasOne("Zomato.Model.Menu", "menu")
+                    b.HasOne("Zomato.Entity.Menu", "menu")
                         .WithMany("menuItems")
                         .HasForeignKey("menuid")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -753,15 +753,15 @@ namespace Zomato.Migrations
                     b.Navigation("menu");
                 });
 
-            modelBuilder.Entity("Zomato.Model.Order", b =>
+            modelBuilder.Entity("Zomato.Entity.Order", b =>
                 {
-                    b.HasOne("Zomato.Model.Consumer", "consumer")
+                    b.HasOne("Zomato.Entity.Consumer", "consumer")
                         .WithMany()
                         .HasForeignKey("consumerid")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Zomato.Model.Restaurant", "restaurant")
+                    b.HasOne("Zomato.Entity.Restaurant", "restaurant")
                         .WithMany("Orders")
                         .HasForeignKey("restaurantid")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -772,15 +772,15 @@ namespace Zomato.Migrations
                     b.Navigation("restaurant");
                 });
 
-            modelBuilder.Entity("Zomato.Model.OrderItem", b =>
+            modelBuilder.Entity("Zomato.Entity.OrderItem", b =>
                 {
-                    b.HasOne("Zomato.Model.MenuItem", "menuItem")
+                    b.HasOne("Zomato.Entity.MenuItem", "menuItem")
                         .WithMany()
                         .HasForeignKey("menuItemid")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Zomato.Model.Order", "order")
+                    b.HasOne("Zomato.Entity.Order", "order")
                         .WithMany("orderItems")
                         .HasForeignKey("orderid")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -791,21 +791,21 @@ namespace Zomato.Migrations
                     b.Navigation("order");
                 });
 
-            modelBuilder.Entity("Zomato.Model.OrderRequests", b =>
+            modelBuilder.Entity("Zomato.Entity.OrderRequests", b =>
                 {
-                    b.HasOne("Zomato.Model.Cart", "cart")
+                    b.HasOne("Zomato.Entity.Cart", "cart")
                         .WithMany()
                         .HasForeignKey("cartid")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Zomato.Model.Consumer", "consumer")
+                    b.HasOne("Zomato.Entity.Consumer", "consumer")
                         .WithMany()
                         .HasForeignKey("consumerid")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Zomato.Model.Restaurant", "restaurant")
+                    b.HasOne("Zomato.Entity.Restaurant", "restaurant")
                         .WithMany("orderRequests")
                         .HasForeignKey("restaurantid")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -818,9 +818,9 @@ namespace Zomato.Migrations
                     b.Navigation("restaurant");
                 });
 
-            modelBuilder.Entity("Zomato.Model.Payment", b =>
+            modelBuilder.Entity("Zomato.Entity.Payment", b =>
                 {
-                    b.HasOne("Zomato.Model.Order", "order")
+                    b.HasOne("Zomato.Entity.Order", "order")
                         .WithMany()
                         .HasForeignKey("orderid")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -829,9 +829,9 @@ namespace Zomato.Migrations
                     b.Navigation("order");
                 });
 
-            modelBuilder.Entity("Zomato.Model.Restaurant", b =>
+            modelBuilder.Entity("Zomato.Entity.Restaurant", b =>
                 {
-                    b.HasOne("Zomato.Model.RestaurantPartner", "restaurantPartner")
+                    b.HasOne("Zomato.Entity.RestaurantPartner", "restaurantPartner")
                         .WithMany()
                         .HasForeignKey("restaurantPartnerid")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -840,9 +840,9 @@ namespace Zomato.Migrations
                     b.Navigation("restaurantPartner");
                 });
 
-            modelBuilder.Entity("Zomato.Model.RestaurantPartner", b =>
+            modelBuilder.Entity("Zomato.Entity.RestaurantPartner", b =>
                 {
-                    b.HasOne("Zomato.Model.User", "user")
+                    b.HasOne("Zomato.Entity.User", "user")
                         .WithMany()
                         .HasForeignKey("userid")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -851,9 +851,9 @@ namespace Zomato.Migrations
                     b.Navigation("user");
                 });
 
-            modelBuilder.Entity("Zomato.Model.Wallet", b =>
+            modelBuilder.Entity("Zomato.Entity.Wallet", b =>
                 {
-                    b.HasOne("Zomato.Model.User", "user")
+                    b.HasOne("Zomato.Entity.User", "user")
                         .WithMany()
                         .HasForeignKey("userid")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -862,15 +862,15 @@ namespace Zomato.Migrations
                     b.Navigation("user");
                 });
 
-            modelBuilder.Entity("Zomato.Model.WalletTransaction", b =>
+            modelBuilder.Entity("Zomato.Entity.WalletTransaction", b =>
                 {
-                    b.HasOne("Zomato.Model.Order", "order")
+                    b.HasOne("Zomato.Entity.Order", "order")
                         .WithMany()
                         .HasForeignKey("orderid")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Zomato.Model.Wallet", "wallet")
+                    b.HasOne("Zomato.Entity.Wallet", "wallet")
                         .WithMany("WalletTransaction")
                         .HasForeignKey("walletid")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -881,39 +881,39 @@ namespace Zomato.Migrations
                     b.Navigation("wallet");
                 });
 
-            modelBuilder.Entity("Zomato.Model.Cart", b =>
+            modelBuilder.Entity("Zomato.Entity.Cart", b =>
                 {
                     b.Navigation("cartItems");
                 });
 
-            modelBuilder.Entity("Zomato.Model.DeliveryPartner", b =>
+            modelBuilder.Entity("Zomato.Entity.DeliveryPartner", b =>
                 {
                     b.Navigation("deliveryRequest");
                 });
 
-            modelBuilder.Entity("Zomato.Model.Menu", b =>
+            modelBuilder.Entity("Zomato.Entity.Menu", b =>
                 {
                     b.Navigation("menuItems");
                 });
 
-            modelBuilder.Entity("Zomato.Model.Order", b =>
+            modelBuilder.Entity("Zomato.Entity.Order", b =>
                 {
                     b.Navigation("orderItems");
                 });
 
-            modelBuilder.Entity("Zomato.Model.Restaurant", b =>
+            modelBuilder.Entity("Zomato.Entity.Restaurant", b =>
                 {
                     b.Navigation("Orders");
 
                     b.Navigation("orderRequests");
                 });
 
-            modelBuilder.Entity("Zomato.Model.User", b =>
+            modelBuilder.Entity("Zomato.Entity.User", b =>
                 {
                     b.Navigation("addresses");
                 });
 
-            modelBuilder.Entity("Zomato.Model.Wallet", b =>
+            modelBuilder.Entity("Zomato.Entity.Wallet", b =>
                 {
                     b.Navigation("WalletTransaction");
                 });

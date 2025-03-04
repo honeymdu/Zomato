@@ -2,25 +2,33 @@
 {
     public class ApiResponse<T>
     {
-        public bool Success { get; set; }
-        public string Message { get; set; }
+        public DateTime Timestamp { get; set; }
         public T Data { get; set; }
+        public ApiError Error { get; set; }
+        public string Message { get; set; }
+        public bool Success { get; set; }
 
+        // Constructor for success response
         public ApiResponse(T data, string message = "Success", bool success = true)
         {
+            Timestamp = DateTime.Now;
             Data = data;
             Message = message;
             Success = success;
         }
 
-        public static ApiResponse<T> SuccessResponse(T data, string message = "Success")
+        // Constructor for error response
+        public ApiResponse(ApiError error)
         {
-            return new ApiResponse<T>(data, message, true);
+            Timestamp = DateTime.Now;
+            Error = error;
+            Success = false;
         }
 
-        public static ApiResponse<T> ErrorResponse(string message)
+        // Default constructor
+        public ApiResponse()
         {
-            return new ApiResponse<T>(default, message, false);
+            Timestamp = DateTime.Now;
         }
     }
 

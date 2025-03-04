@@ -103,7 +103,7 @@ public class DeliveryService : IDeliveryService
         };
         var deliveryPartners = strategy.findMatchingDeliveryPartner(deliveryFareGetDto);
 
-        if (!deliveryPartners.Any())
+        if (deliveryPartners==null)
         {
             _waitingQueue.Enqueue(orderPriority);
             _logger.LogWarning("No delivery partners available.");

@@ -39,7 +39,7 @@ namespace Zomato.Service.Impl
 
         public async Task processPayment(Order order)
         {
-            Payment payment = await _context.Payment.Where(u=>u.order ==order).FirstOrDefaultAsync()??  throw new ResourceNotFoundException("Payment not found for the Order with Id " + order.getId()));
+            Payment payment = await _context.Payment.Where(u=>u.order ==order).FirstOrDefaultAsync()??  throw new ResourceNotFoundException("Payment not found for the Order with Id " + order.id);
             await paymentStrategyManager.GetPaymentStrategy(payment.paymentMethod).ProcessPayment(payment);
         }
 

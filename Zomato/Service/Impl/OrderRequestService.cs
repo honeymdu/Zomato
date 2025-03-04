@@ -47,7 +47,7 @@ namespace Zomato.Service.Impl
                 DropLocation = UserLocation,
                 PickupLocation = cart.restaurant.restaurantLocation
             };
-            Double delivery_price = deliveryFareCalculationStrategy.calculateDeliveryFees(deliveryFareGetDto);
+            Double delivery_price =await deliveryFareCalculationStrategy.calculateDeliveryFees(deliveryFareGetDto);
             OrderRequests orderRequests = new OrderRequests() { cart = cart,
                 consumer = cart.consumer,
                 deliveryFee = delivery_price,

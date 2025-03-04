@@ -8,6 +8,11 @@ using Zomato.Service.Impl;
 using Zomato.Exceptions;
 using Zomato.Advices;
 using Zomato.ServiceRegistry;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.SignalR;
+using Zomato.Strategies.Impl;
+using Zomato.Strategies;
+using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,8 +48,19 @@ builder.Services.AddAuthorization();
 
 var services = builder.Services;
 
+var mapperConfig = new MapperConfiguration(cfg =>
+{
+    cfg.AddProfile<Zomato.Config.MappingProfile>();
+});
+
+IMapper mapper = mapperConfig.CreateMapper();
+services.AddSingleton(mapper);
+
+
+
 // Register all strategies using extension method
-services.AddStrategyServices();
+services.AddStrategyServices(builder.Configuration);
+
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -73,10 +89,12 @@ var app = builder.Build();
 //    c.RoutePrefix = string.Empty; // Swagger UI at root
 //});
 
-app.UseHsts();
+//app.UseHsts();
 
 // Add Middleware for Exception Handling
 app.UseMiddleware<ExceptionMiddleware>();
+
+
 
 // Register global response middleware
 app.UseMiddleware<GlobalResponseMiddleware>(); 

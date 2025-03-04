@@ -9,12 +9,12 @@ namespace Zomato.Strategies.Impl
 {
     public class CashPaymentStrategy : IPaymentStrategy
     {
-        private readonly WalletService walletService;
+        private readonly IWalletService walletService;
         private readonly AppDbContext _context;
         private readonly IDeliveryService deliveryService;
         private const double PLATFORM_COMMISSION = 10.5;
 
-        public CashPaymentStrategy(WalletService walletService, AppDbContext context, IDeliveryService deliveryService)
+        public CashPaymentStrategy(IWalletService walletService, AppDbContext context, IDeliveryService deliveryService)
         {
             this.walletService = walletService;
             _context = context;
