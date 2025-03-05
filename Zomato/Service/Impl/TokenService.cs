@@ -24,8 +24,9 @@ namespace Zomato.Service.Impl
             {
             new Claim(JwtRegisteredClaimNames.Sub, user.email),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            new Claim(ClaimTypes.NameIdentifier, user.id.ToString()),
             new Claim(ClaimTypes.Role, user.role.ToString())
-        };
+            };
 
             var token = new JwtSecurityToken(
                 issuer: _config["JwtSettings:Issuer"],

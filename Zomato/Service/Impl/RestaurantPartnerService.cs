@@ -6,6 +6,7 @@ using Zomato.Data;
 using Zomato.Dto;
 using Zomato.Entity;
 using Zomato.Entity.Enum;
+using Zomato.Exceptions.CustomExceptionHandler;
 
 namespace Zomato.Service.Impl
 {
@@ -20,8 +21,9 @@ namespace Zomato.Service.Impl
         private readonly IRestaurantService restaurantService;
         private readonly IWalletTransactionService walletTransactionService;
         private readonly IDeliveryService deliveryService;
+        private readonly UserContextService _userContextService;
 
-        public RestaurantPartnerService(IMapper mapper, AppDbContext context, IOrderRequestService orderRequestService, IOrderService orderService, IPaymentService paymentService, IMenuService menuService, IRestaurantService restaurantService)
+        public RestaurantPartnerService(IMapper mapper, AppDbContext context, IOrderRequestService orderRequestService, IOrderService orderService, IPaymentService paymentService, IMenuService menuService, IRestaurantService restaurantService, UserContextService userContextService)
         {
             _mapper = mapper;
             _context = context;
@@ -30,6 +32,7 @@ namespace Zomato.Service.Impl
             this.paymentService = paymentService;
             this.menuService = menuService;
             this.restaurantService = restaurantService;
+            this._userContextService = userContextService;
         }
 
         public async Task<Order> acceptOrderRequest(long orderRequestId)
@@ -89,8 +92,9 @@ namespace Zomato.Service.Impl
 
         public async Task<RestaurantPartner> getCurrentRestaurantPartner()
         {
-            return null;
-
+           var userEmail = _userContextService.GetUserEmail();
+           var user = await _context.User.Where(u => u.email == userEmail).FirstOrDefaultAsync();
+            return await _context.RestaurantPartner.Where(rp => rp.user == user).FirstOrDefaultAsync() ?? throw new ResourceNotFoundException("Current User not Found");
         }
 
         public async Task<RestaurantOTP> getRestaurantOTPByOrderId(long OrderId)

@@ -4,8 +4,8 @@ namespace Zomato.Dto
 {
     public class ConsumerDto
     {
-        private long id { get; set; }
-        private UserDto user { get; set; }
-        private Double rating { get; set; }
+        public long id { get; set; }
+        public UserDto user { get; set; }
+        public Double rating { get; set; }
     }
 }

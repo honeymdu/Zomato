@@ -5,8 +5,8 @@ namespace Zomato.Dto
     public class RestaurantPartnerDto
     {
 
-        private long aadharNo { get; set; }
-        private UserDto user { get; set; }
+        public long aadharNo { get; set; }
+        public UserDto user { get; set; }
 
     }
 }

@@ -159,7 +159,7 @@ namespace Zomato.Service.Impl
                 return await addItemToCart(cart.id, cartItem);
             }
 
-            }
+        }
  
         public async Task<CartDto> removeItemFromCart(long CartId, CartItem cartItem)
         {

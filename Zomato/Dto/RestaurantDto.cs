@@ -4,12 +4,12 @@ namespace Zomato.Dto
 {
     public class RestaurantDto
     {
-        private long id { get; set; }
-        private String name { get; set; }
-        private PointDto restaurantLocation { get; set; }
-        private String gstNumber { get; set; }
-        private Boolean isAvailable { get; set; }
-        private Boolean isVarified { get; set; }
-        private RestaurantPartnerDto restaurantPartner { get; set; }
+        public long id { get; set; }
+        public String name { get; set; }
+        public PointDto restaurantLocation { get; set; }
+        public String gstNumber { get; set; }
+        public Boolean isAvailable { get; set; }
+        public Boolean isVarified { get; set; }
+        public RestaurantPartnerDto restaurantPartner { get; set; }
     }
 }

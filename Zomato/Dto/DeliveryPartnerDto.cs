@@ -4,12 +4,12 @@ namespace Zomato.Dto
 {
     public class DeliveryPartnerDto
     {
-        private long id { get; set; }
-        private Double rating { get; set; }
-        private UserDto user { get; set; }
-        private Boolean available { get; set; }
-        private String vehicleId { get; set; }
-        private PointDto currentLocation { get; set; }
-        private List<DeliveryItemDto> deliveryItems { get; set; }
+        public long id { get; set; }
+        public Double rating { get; set; }
+        public UserDto user { get; set; }
+        public Boolean available { get; set; }
+        public String vehicleId { get; set; }
+        public PointDto currentLocation { get; set; }
+        public List<DeliveryItemDto> deliveryItems { get; set; }
     }
 }

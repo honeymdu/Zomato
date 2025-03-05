@@ -2,7 +2,7 @@
 {
     public class OnBoardDeliveryPartnerDto
     {
-        private String vehicleId { get; set; }
-        private PointDto currentLocation { get; set; }
+        public String vehicleId { get; set; }
+        public PointDto currentLocation { get; set; }
     }
 }

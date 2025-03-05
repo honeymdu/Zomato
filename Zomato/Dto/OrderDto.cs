@@ -5,17 +5,17 @@ namespace Zomato.Dto
 {
     public class OrderDto
     {
-        private long id { get; set; }
-        private ConsumerDto consumer { get; set; }
-        private List<OrderItemDto> orderItems { get; set; }
-        private Double totalPrice { get; set; }
-        private Double foodAmount { get; set; }
-        private Double platformFee { get; set; }
-        private PointDto pickupLocation { get; set; }
-        private PointDto dropoffLocation { get; set; }
-        private OrderStatus orderStatus { get; set; }
-        private DateTime OrderCreationTime { get; set; }
-        private RestaurantDto restaurant { get; set; }
-        private DeliveryPartnerDto deliveryPartner { get; set; }
+        public long id { get; set; }
+        public ConsumerDto consumer { get; set; }
+        public List<OrderItemDto> orderItems { get; set; }
+        public Double totalPrice { get; set; }
+        public Double foodAmount { get; set; }
+        public Double platformFee { get; set; }
+        public PointDto pickupLocation { get; set; }
+        public PointDto dropoffLocation { get; set; }
+        public OrderStatus orderStatus { get; set; }
+        public DateTime OrderCreationTime { get; set; }
+        public RestaurantDto restaurant { get; set; }
+        public DeliveryPartnerDto deliveryPartner { get; set; }
     }
 }

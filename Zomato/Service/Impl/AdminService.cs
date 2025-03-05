@@ -75,7 +75,12 @@ namespace Zomato.Service.Impl
 
             var savedRestaurantPartner = await restaurantPartnerService.createNewRestaurantPartner(restaurantPartner);
 
-            return _mapper.Map<RestaurantPartnerDto>(savedRestaurantPartner);
+            return new RestaurantPartnerDto
+            {
+
+                aadharNo = savedRestaurantPartner.aadharNo,
+                user = _mapper.Map<UserDto>(user)
+            };
         }
 
         public async Task<bool> varifyRestaurant(long restaurantId)

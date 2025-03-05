@@ -13,8 +13,8 @@ using Zomato.Data;
 namespace Zomato.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250228110338_Intial_Migration")]
-    partial class Intial_Migration
+    [Migration("20250305064204_Intial-Migration")]
+    partial class IntialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

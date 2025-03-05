@@ -2,6 +2,6 @@
 {
     public class ConsumerOTP
     {
-        private String consumerOTP { get; set; }
+        public String consumerOTP { get; set; }
     }
 }

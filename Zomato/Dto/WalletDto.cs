@@ -4,9 +4,9 @@ namespace Zomato.Dto
 {
     public class WalletDto
     {
-        private long id { get; set; }
-        private Double Balance { get; set; }
-        private UserDto user { get; set; }
-        private List<WalletTransactionDto> WalletTransaction { get; set; }
+       public long id { get; set; }
+       public Double Balance { get; set; }
+       public UserDto user { get; set; }
+       public List<WalletTransactionDto> WalletTransaction { get; set; }
     }
 }

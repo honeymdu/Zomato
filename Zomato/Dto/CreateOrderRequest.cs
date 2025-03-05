@@ -5,8 +5,8 @@ namespace Zomato.Dto
 {
     public class CreateOrderRequest
     {
-        private Point userLocation { get; set; }
+        public Point userLocation { get; set; }
 
-        private PaymentMethod paymentMethod { get; set; }
+        public PaymentMethod paymentMethod { get; set; }
     }
 }

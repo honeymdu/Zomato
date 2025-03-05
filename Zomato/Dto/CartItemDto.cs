@@ -4,9 +4,9 @@ namespace Zomato.Dto
 {
     public class CartItemDto
     {
-        private long id { get; set; }
-        private int quantity { get; set; }
-        private MenuItemDto menuItem { get; set; }
-        private Double totalPrice { get; set; }
+        public long id { get; set; }
+        public int quantity { get; set; }
+        public MenuItemDto menuItem { get; set; }
+        public Double totalPrice { get; set; }
     }
 }

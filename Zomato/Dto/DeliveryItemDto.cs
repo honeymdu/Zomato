@@ -5,12 +5,12 @@ namespace Zomato.Dto
 {
     public class DeliveryItemDto
     {
-        private long id { get; set; }
-        private OrderStatus orderStatus { get; set; }
-        private String deliveryAddress { get; set; }
-        private DateTime deliveryTime { get; set; }
-        private OrderDto order { get; set; }
-        private OrderItemDto orderItem { get; set; }
-        private DeliveryPartnerDto deliveryPartner { get; set; }
+        public long id { get; set; }
+        public OrderStatus orderStatus { get; set; }
+        public String deliveryAddress { get; set; }
+        public DateTime deliveryTime { get; set; }
+        public OrderDto order { get; set; }
+        public OrderItemDto orderItem { get; set; }
+        public DeliveryPartnerDto deliveryPartner { get; set; }
     }
 }

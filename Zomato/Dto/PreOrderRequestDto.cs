@@ -4,13 +4,13 @@ namespace Zomato.Dto
 {
     public class PreOrderRequestDto
     {
-        private long consumerId { get; set; }
-        private long restaurantId { get; set; }
-        private CartDto cart { get; set; }
-        private Double foodAmount { get; set; }
-        private Double platformFee { get; set; }
-        private Double deliveryFee { get; set; }
-        private Double totalPrice { get; set; }
-        private PointDto currentLocation { get; set; }
+        public long consumerId { get; set; }
+        public long restaurantId { get; set; }
+        public CartDto cart { get; set; }
+        public Double foodAmount { get; set; }
+        public Double platformFee { get; set; }
+        public Double deliveryFee { get; set; }
+        public Double totalPrice { get; set; }
+        public PointDto currentLocation { get; set; }
     }
 }

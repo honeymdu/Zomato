@@ -5,12 +5,12 @@ namespace Zomato.Dto
 {
     public class WalletTransactionDto
     {
-        private long id { get; set; }
-        private Double Amount { get; set; }
-        private TransactionType transactionType { get; set; }
-        private TransactionMethod transactionMethod { get; set; }
-        private OrderDto order { get; set; }
-        private WalletDto wallet { get; set; }
-        private DateTime timeStamp { get; set; }
+        public long id { get; set; }
+        public Double Amount { get; set; }
+        public TransactionType transactionType { get; set; }
+        public TransactionMethod transactionMethod { get; set; }
+        public OrderDto order { get; set; }
+        public WalletDto wallet { get; set; }
+        public DateTime timeStamp { get; set; }
     }
 }

@@ -44,6 +44,20 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("CONSUMER", policy => policy.RequireRole("CONSUMER"));
+    options.AddPolicy("DELIVERY_PARTNER", policy => policy.RequireRole("DELIVERY_PARTNER"));
+    options.AddPolicy("RESTAURENT_PARTNER", policy => policy.RequireRole("RESTAURENT_PARTNER"));
+});
+
+
+//to access current user context
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<UserContextService>();   //register user context service
+
+
 // Registering the services
 
 var services = builder.Services;

@@ -5,14 +5,14 @@ namespace Zomato.Dto
 {
     public class OrderRequestsDto
     {
-        private long id { get; set; }
-        private CartDto cart { get; set; }
-        private Double foodAmount { get; set; }
-        private Double platformFee { get; set; }
-        private Double totalPrice { get; set; }
-        private Double deliveryFee { get; set; }
-        private OrderRequestStatus orderRequestStatus { get; set; }
-        private PaymentMethod paymentMethod { get; set; }
-        private PaymentStatus paymentStatus { get; set; }
+        public long id { get; set; }
+        public CartDto cart { get; set; }
+        public Double foodAmount { get; set; }
+        public Double platformFee { get; set; }
+        public Double totalPrice { get; set; }
+        public Double deliveryFee { get; set; }
+        public OrderRequestStatus orderRequestStatus { get; set; }
+        public PaymentMethod paymentMethod { get; set; }
+        public PaymentStatus paymentStatus { get; set; }
     }
 }

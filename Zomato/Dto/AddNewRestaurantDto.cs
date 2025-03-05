@@ -2,8 +2,8 @@
 {
     public class AddNewRestaurantDto
     {
-        private string name { get; set; }
-        private PointDto restaurantLocation { get; set; }
-        private string gstNumber { get; set; }
+        public string name { get; set; }
+        public PointDto restaurantLocation { get; set; }
+        public string gstNumber { get; set; }
     }
 }

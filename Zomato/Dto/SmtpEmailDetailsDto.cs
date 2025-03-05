@@ -2,9 +2,9 @@
 {
     public class SmtpEmailDetailsDto
     {
-        private String recipient { get; set; }
-        private String msgBody { get; set; }
-        private String subject { get; set; }
-        private String attachment { get; set; }
+        public String recipient { get; set; }
+        public String msgBody { get; set; }
+        public String subject { get; set; }
+        public String attachment { get; set; }
     }
 }
