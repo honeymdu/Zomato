@@ -8,22 +8,22 @@ namespace Zomato.Service
 {
     public interface IConsumerService
     {
-        OrderRequestsDto createOrderRequest(long RestaurantId, CreateOrderRequest createOrderRequest);
+        Task<OrderRequestsDto> createOrderRequest(long RestaurantId, CreateOrderRequest createOrderRequest);
 
        // PrePaidOrderRequestsDto createPrePaidOrderRequest(Long RestaurantId, CreateOrderRequest createOrderRequest);
 
-        Boolean rateRestaurant(long RestaurantId, Double rating);
-        Consumer createNewConsumer(User user);
-        Consumer getConsumerById(long consumerId);
-        Page<Restaurant> getAllRestaurant(PageRequest pageRequest);
-        Consumer getCurrentConsumer();
-        CartDto viewCart(long RestaurantId);
-        CartDto PrepareCart(long RestaurantId, long MenuItemId);
-        CartDto removeCartItem(long CartId, long cartItemId);
-        void clearCart(long RestaurantId);
-        Menu viewMenuByRestaurantId(long RestaurantId);
+        Task<Boolean> rateRestaurant(long RestaurantId, Double rating);
+        Task<Consumer> createNewConsumer(User user);
+        Task<Consumer> getConsumerById(long consumerId);
+        Task<Page<Restaurant>> getAllRestaurant(PageRequest pageRequest);
+        Task<Consumer> getCurrentConsumer();
+        Task<CartDto> viewCart(long RestaurantId);
+        Task<CartDto> PrepareCart(long RestaurantId, long MenuItemId);
+        Task<CartDto> removeCartItem(long CartId, long cartItemId);
+        Task clearCart(long RestaurantId);
+        Task<Menu> viewMenuByRestaurantId(long RestaurantId);
         PreOrderRequestDto viewPreOrderRequest(long RestaurantId, Point UserLocation);
         Boolean PreProcessPayment();
-        ConsumerOTP getOtpByOrderId(long OrderId);
+        Task<ConsumerOTP> getOtpByOrderId(long OrderId);
     }
 }
