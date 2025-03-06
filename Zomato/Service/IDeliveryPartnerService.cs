@@ -9,23 +9,23 @@ namespace Zomato.Service
     public interface IDeliveryPartnerService
     {
 
-        void rateDeliveryPartner(long UserId, Double rating);
+        Task rateDeliveryPartner(long UserId, Double rating);
 
-        void acceptDeliveryRequest(long deliveryRequestId);
+        Task acceptDeliveryRequest(long deliveryRequestId);
 
-        void cancelDeliveryRequest(long deliveryRequestId);
+        Task cancelDeliveryRequest(long deliveryRequestId);
 
-        void completeOrderDelivery(long deliveryRequestId, String consumerOtp);
+        Task completeOrderDelivery(long deliveryRequestId, String consumerOtp);
 
         Task<DeliveryPartnerDto> save(DeliveryPartner deliveryPartner);
 
         Page<DeliveryPartner> getAllDeliveryPartner(PageRequest pageRequest);
 
-        void pickupOrderFromRestaurant(long deliveryRequestId, String restaurantOTP);
+        Task pickupOrderFromRestaurant(long deliveryRequestId, String restaurantOTP);
 
-        DeliveryPartner getCurrentDeliveryPartner();
+        Task<DeliveryPartner> getCurrentDeliveryPartner();
 
-        Point getCurrentLocation();
+        Task<Point> getCurrentLocation();
 
     }
 }

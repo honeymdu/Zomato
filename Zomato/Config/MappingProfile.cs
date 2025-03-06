@@ -16,6 +16,7 @@ namespace Zomato.Config
             CreateMap<Restaurant, RestaurantDto>();
             CreateMap<Wallet, WalletDto>();
             CreateMap<OrderRequests, OrderRequestsDto>();
+            CreateMap<DeliveryPartner, DeliveryPartnerDto>();
 
 
 

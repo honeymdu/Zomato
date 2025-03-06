@@ -13,18 +13,18 @@ namespace Zomato.Service.Impl
 {
     public class ConsumerService : IConsumerService
     {
-        private readonly OrderRequestService orderRequestService;
-        private readonly RestaurantService restaurantService;
+        private readonly IOrderRequestService orderRequestService;
+        private readonly IRestaurantService restaurantService;
         private readonly IMapper mapper;
-        private readonly MenuService menuService;
-        private readonly CartService cartService;
-        private readonly CartItemService cartItemService;
+        private readonly IMenuService menuService;
+        private readonly ICartService cartService;
+        private readonly ICartItemService cartItemService;
        // private readonly PreOrderRequestService preOrderRequestService;
-        private readonly DeliveryService deliveryService;
+        private readonly IDeliveryService deliveryService;
         private readonly AppDbContext context;
         private readonly UserContextService userContextService;
 
-        public ConsumerService(OrderRequestService orderRequestService, RestaurantService restaurantService, IMapper mapper, MenuService menuService, CartService cartService, CartItemService cartItemService, DeliveryService deliveryService, AppDbContext context, UserContextService userContextService)
+        public ConsumerService(IOrderRequestService orderRequestService, IRestaurantService restaurantService, IMapper mapper, IMenuService menuService, ICartService cartService, ICartItemService cartItemService, IDeliveryService deliveryService, AppDbContext context, UserContextService userContextService)
         {
             this.orderRequestService = orderRequestService;
             this.restaurantService = restaurantService;

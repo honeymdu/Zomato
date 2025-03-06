@@ -16,7 +16,7 @@ namespace Zomato.Entity
         public String city { get; set; }
         public String state { get; set; }
         public String postalCode { get; set; }
-        private Point userLocation { get; set; }
-        private User user { get; set; }
+        public Point userLocation { get; set; }
+        public User user { get; set; }
     }
 }
