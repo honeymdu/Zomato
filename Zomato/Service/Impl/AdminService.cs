@@ -18,13 +18,14 @@ namespace Zomato.Service.Impl
         private readonly IDeliveryPartnerService deliveryPartnerService;
         private readonly IRestaurantService restaurantService;
 
-        public AdminService(AppDbContext context, IConfiguration config, IUserService userService, IMapper mapper, IDeliveryPartnerService deliveryPartnerService   )
+        public AdminService(AppDbContext context, IConfiguration config, IUserService userService, IMapper mapper, IDeliveryPartnerService deliveryPartnerService,IRestaurantPartnerService restaurantPartnerService   )
         {
             _context = context;
             _config = config;
             _userService = userService;
             _mapper = mapper;
             this.deliveryPartnerService = deliveryPartnerService;
+            this.restaurantPartnerService = restaurantPartnerService;
         }
 
         public Task<Page<DeliveryPartnerDto>> getAllDeliveryPartner(PageRequest pageRequest)
@@ -70,7 +71,7 @@ namespace Zomato.Service.Impl
 
             user.role = Role.RESTAURENT_PARTNER;
 
-            var restaurantPartner = _mapper.Map<RestaurantPartner>(onBoardRestaurantPartnerDto);
+            RestaurantPartner restaurantPartner = _mapper.Map<RestaurantPartner>(onBoardRestaurantPartnerDto);
             restaurantPartner.user = user;
 
             var savedRestaurantPartner = await restaurantPartnerService.createNewRestaurantPartner(restaurantPartner);

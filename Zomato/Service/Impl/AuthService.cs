@@ -11,6 +11,7 @@ using Zomato.Entity;
 using Zomato.Entity.Enum;
 using System.Threading.Tasks;
 using AutoMapper;
+using System.Collections.Generic;
 
 namespace Zomato.Service
 {
@@ -67,14 +68,17 @@ namespace Zomato.Service
             }
 
             var hashedPassword = BCrypt.Net.BCrypt.HashPassword(signupDto.password);
-
+            var address = _mapper.Map<Address>(signupDto.addresses);
+            List<Address> addresses = new List<Address>();
+            addresses.Add(address);
             var user = new User
             {
                 name = signupDto.name,
                 email = signupDto.email,
                 password = hashedPassword,
                 contact = signupDto.contact,
-                role = Role.CONSUMER
+                role = Role.CONSUMER,
+                addresses = addresses
             };
 
             _context.User.Add(user);

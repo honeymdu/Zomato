@@ -4,7 +4,7 @@
     {
         public DateTime Timestamp { get; set; }
         public T Data { get; set; }
-        public ApiError Error { get; set; }
+        public T Error { get; set; }
         public string Message { get; set; }
         public bool Success { get; set; }
 
@@ -18,11 +18,11 @@
         }
 
         // Constructor for error response
-        public ApiResponse(ApiError error)
+        public ApiResponse(T error, string message)
         {
-            Timestamp = DateTime.Now;
-            Error = error;
-            Success = false;
+            Timestamp = DateTime.UtcNow;
+            this.Error = error;
+            Data = default;
         }
 
         // Default constructor

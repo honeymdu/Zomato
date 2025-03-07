@@ -105,11 +105,6 @@ var app = builder.Build();
 
 //app.UseHsts();
 
-// Add Middleware for Exception Handling
-app.UseMiddleware<ExceptionMiddleware>();
-
-
-
 // Register global response middleware
 app.UseMiddleware<GlobalResponseMiddleware>(); 
 

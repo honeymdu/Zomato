@@ -27,7 +27,7 @@ namespace Zomato.Controllers
         public async Task<ActionResult<RestaurantPartnerDto>> OnBoardNewRestaurantPartner([FromRoute] long userId, [FromBody] OnBoardRestaurantPartnerDto onBoardRestaurantPartnerDto)
         {
             var restaurantPartner =  await _adminService.onBoardNewRestaurantPartner(userId, onBoardRestaurantPartnerDto);
-             return CreatedAtAction(nameof(onBoardNewDeliveryPartner),restaurantPartner);
+            return Ok(restaurantPartner);
         }
 
         [HttpPost("onBoard-Delivery-Partner/{UserId}")]
@@ -35,7 +35,7 @@ namespace Zomato.Controllers
                 [FromBody] OnBoardDeliveryPartnerDto onBoardDeliveryPartnerDto)
         {
           var deliveryPartnerDto =  await _adminService.onBoardDeliveryPartner(UserId, onBoardDeliveryPartnerDto);
-          return  CreatedAtAction(nameof(onBoardNewDeliveryPartner),deliveryPartnerDto);
+            return Ok(deliveryPartnerDto);
         }
 
 

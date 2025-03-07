@@ -146,9 +146,10 @@ namespace Zomato.Service.Impl
 
         public async Task<DeliveryPartnerDto> save(DeliveryPartner deliveryPartner)
         {
-           var delivery_partner = _context.DeliveryPartner.Update(deliveryPartner);
+            var updatedPartner = _context.DeliveryPartner.Update(deliveryPartner).Entity; // Extract entity
             await _context.SaveChangesAsync();
-            return _mapper.Map<DeliveryPartnerDto>(delivery_partner);
+            return _mapper.Map<DeliveryPartnerDto>(updatedPartner); // Map the entity, not EntityEntry<T>
         }
+
     }
 }

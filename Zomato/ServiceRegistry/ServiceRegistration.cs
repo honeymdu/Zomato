@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Zomato.Data;
+using Zomato.Exceptions;
 using Zomato.Service;
 using Zomato.Service.Impl;
 using Zomato.Strategies;
@@ -33,6 +34,7 @@ namespace Zomato.ServiceRegistry
             services.AddTransient<IRestaurantService, RestaurantService>();
             services.AddTransient<IWalletTransactionService, WalletTransactionService>();
             services.AddTransient<IDeliveryPartnerService, DeliveryPartnerService>();
+            services.AddTransient<IRestaurantPartnerService, RestaurantPartnerService>();
 
             // Register Payment Services
             services.AddTransient<IPaymentService, PaymentService>();
@@ -63,6 +65,8 @@ namespace Zomato.ServiceRegistry
             // Register Strategy Manager
             services.AddSingleton<DeliveryStrategyManager>();
             services.AddSingleton<PaymentStrategyManager>();
+
+            
         }
     }
 }

@@ -4,10 +4,10 @@ namespace Zomato.Advices
 {
     public class ApiError
     {
-        public HttpStatusCode HttpStatus { get; set; }
+        public int HttpStatus { get; set; }
         public string Message { get; set; }
 
-        public ApiError(HttpStatusCode httpStatus, string message)
+        public ApiError(int httpStatus, string message)
         {
             HttpStatus = httpStatus;
             Message = message;

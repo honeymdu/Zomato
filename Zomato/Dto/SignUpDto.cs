@@ -6,5 +6,6 @@
         public String email { get; set; }
         public String password { get; set; }
         public String contact { get; set; }
+        public AddressDto addresses { get; set; }
     }
 }
