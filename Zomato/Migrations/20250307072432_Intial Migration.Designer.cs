@@ -13,7 +13,7 @@ using Zomato.Data;
 namespace Zomato.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250305064204_Intial-Migration")]
+    [Migration("20250307072432_Intial Migration")]
     partial class IntialMigration
     {
         /// <inheritdoc />
@@ -34,9 +34,6 @@ namespace Zomato.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("id"));
 
-                    b.Property<long?>("Userid")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("city")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -53,9 +50,16 @@ namespace Zomato.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Point>("userLocation")
+                        .IsRequired()
+                        .HasColumnType("geography");
+
+                    b.Property<long>("userid")
+                        .HasColumnType("bigint");
+
                     b.HasKey("id");
 
-                    b.HasIndex("Userid");
+                    b.HasIndex("userid");
 
                     b.ToTable("Address");
                 });
@@ -649,10 +653,13 @@ namespace Zomato.Migrations
 
             modelBuilder.Entity("Zomato.Entity.Address", b =>
                 {
-                    b.HasOne("Zomato.Entity.User", null)
+                    b.HasOne("Zomato.Entity.User", "user")
                         .WithMany("addresses")
-                        .HasForeignKey("Userid")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("userid")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("user");
                 });
 
             modelBuilder.Entity("Zomato.Entity.Cart", b =>

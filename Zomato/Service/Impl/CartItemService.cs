@@ -10,12 +10,10 @@ namespace Zomato.Service.Impl
     public class CartItemService : ICartItemService
     {
         private readonly AppDbContext _context;
-        private readonly IMapper _mapper;
 
-        public CartItemService(AppDbContext context, IMapper mapper)
+        public CartItemService(AppDbContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         public CartItem createNewCartItem(MenuItem menuItem, Cart cart)

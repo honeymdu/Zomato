@@ -39,48 +39,31 @@ namespace Zomato.Controllers
         }
 
 
-        //[HttpGet("list/get-all-restaurant")]
-        //public async Task<ActionResult<PageList<RestaurantDto>>> GetAllRestaurant(
-        //[FromQuery] int pageOffset = 0,
-        //         [FromQuery] int pageSize = 10)
-        //{
-        //    var pageRequest = new PageRequest(pageOffset, pageSize);
+        [HttpGet("list/get-all-restaurant")]
+        public async Task<ActionResult<Page<RestaurantDto>>> GetAllRestaurant()
+        {
+            var pageRequest = new PageRequest();
+            var result = await _adminService.getAllRestaurant(pageRequest);
+            return Ok(result);
+        }
 
-        //    var result = await _adminService.GetAllRestaurants(pageRequest);
-
-        //    // Return the result as a response
-        //    return Ok(result);
-        //}
-
-        //[HttpGet("list/get-all-delivery-partner")]
-        //public async Task<ActionResult<PageList<DeliveryPartnerDto>>> GetAllDeliveryPartner(
-        //    [FromQuery] int pageOffset = 0,
-        //    [FromQuery] int pageSize = 10)
-        //{
-        //    var pageRequest = new PageRequest(pageOffset, pageSize);
-
-        //    var result = await _adminService.GetAllDeliveryPartners(pageRequest);
-
-        //    // Return the result as a response
-        //    return Ok(result);
-        //}
+        [HttpGet("list/get-all-delivery-partner")]
+        public async Task<ActionResult<Page<DeliveryPartnerDto>>> GetAllDeliveryPartner()
+        {
+            var pageRequest = new PageRequest();
+            var result = await _adminService.getAllDeliveryPartner(pageRequest);
+            return Ok(result);
+        }
 
 
-  
-        [HttpPost("/verify-Restaurant/{RestaurantId}")]
+
+        [HttpPost("verify-Restaurant/{RestaurantId}")]
         public async Task<ActionResult<bool>> VerifyRestaurant([FromRoute] long RestaurantId)
         {
             bool isVerified = await _adminService.varifyRestaurant(RestaurantId);
             return Ok(isVerified);
         }
 
-
-
-
     }
 
-
-
-
-}
 }

@@ -3,23 +3,23 @@ using Microsoft.AspNetCore.Mvc;
 using Zomato.Dto;
 using Zomato.Entity;
 using Zomato.Entity.Enum;
-using Zomato.Service.Impl;
+using Zomato.Service;
 
 namespace Zomato.Controllers
 {
-    [Route("api/delivery/partner")]
+    [Route("api/delivery-partner")]
     [ApiController]
-    [Authorize(Roles ="DELIVERY_PARTNER")]
+    [Authorize(Roles = "DELIVERY_PARTNER")]
     public class DeliveryPartnerController: ControllerBase
     {
-        private readonly DeliveryPartnerService deliveryPartnerService;
+        private readonly IDeliveryPartnerService deliveryPartnerService;
 
-        public DeliveryPartnerController(DeliveryPartnerService deliveryPartnerService)
+        public DeliveryPartnerController(IDeliveryPartnerService deliveryPartnerService)
         {
             this.deliveryPartnerService = deliveryPartnerService;
         }
 
-        [HttpPost("/pick-up-order/{deliveryRequestId}")]
+        [HttpPost("pick-up-order/{deliveryRequestId}")]
         public async Task<ActionResult<Boolean>> pickOrderFromRestaurant([FromRoute] long deliveryRequestId,
             [FromBody] RestaurantOTP restaurantOTP)
         {
@@ -28,14 +28,14 @@ namespace Zomato.Controllers
         }
 
 
-         [HttpPost("/accept-delivery-request/{deliveryRequestId}")]
+         [HttpPost("accept-delivery-request/{deliveryRequestId}")]
         public async Task<ActionResult<Boolean>> acceptdeliveryRequest([FromRoute] long deliveryRequestId)
         {
            await deliveryPartnerService.acceptDeliveryRequest(deliveryRequestId);
             return Ok(true);
         }
 
-        [HttpPost("/cancel-delivery-request/{deliveryRequestId}")]
+        [HttpPost("cancel-delivery-request/{deliveryRequestId}")]
         public async Task<ActionResult<Boolean>> canceldeliveryRequest([FromRoute] long deliveryRequestId)
         {
             await deliveryPartnerService.cancelDeliveryRequest(deliveryRequestId);
@@ -43,7 +43,7 @@ namespace Zomato.Controllers
         }
 
 
-         [HttpPost("/complete-delivery-request/{deliveryRequestId}")]
+         [HttpPost("complete-delivery-request/{deliveryRequestId}")]
         public async Task<ActionResult<Boolean>> completedeliveryRequest([FromRoute] long deliveryRequestId,
             [FromBody] ConsumerOTP consumerOTP)
         {

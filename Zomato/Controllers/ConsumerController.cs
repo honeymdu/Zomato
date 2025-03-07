@@ -67,7 +67,7 @@ namespace Zomato.Controllers
         }
 
 
-        [HttpPost("/view-pre-order-request/{RestaurantId}")]
+        [HttpPost("view-pre-order-request/{RestaurantId}")]
         public ActionResult<PreOrderRequestDto> viewPreOrderRequest([FromRoute] long RestaurantId,
                         [FromBody] CreateOrderRequestDto createOrderRequestDto)
         {
@@ -77,7 +77,7 @@ namespace Zomato.Controllers
         }
 
 
-        [HttpPost("/create-order-request/{RestaurantId}")]
+        [HttpPost("create-order-request/{RestaurantId}")]
         public async Task<ActionResult<OrderRequestsDto>> createOrderRequest([FromRoute] long RestaurantId,
                          [FromBody] CreateOrderRequestDto createOrderRequestDto)
         {
@@ -87,26 +87,22 @@ namespace Zomato.Controllers
                 return Ok(orderRequestsDto);
         }
 
-
-        //@GetMapping("/list/get-available-restaurant")
-        //public ResponseEntity<Page<Restaurant>> viewAvailableRestaurant(
-        //                @RequestParam(defaultValue = "0") Integer PageOffset,
-        //                @RequestParam(defaultValue = "10", required = false) Integer PageSize) {
-        //        PageRequest pageRequest = PageRequest.of(PageOffset, PageSize,
-        //                        Sort.by(Sort.Direction.DESC, "id"));
-        //Page<Restaurant> restaurants = consumerService.getAllRestaurant(pageRequest);
-        //        return ResponseEntity.ok(restaurants);
-        //}
+         [HttpGet("list/get-available-restaurant")]
+        public async Task<ActionResult<Page<Restaurant>>> viewAvailableRestaurant() {
+            PageRequest page = new PageRequest();
+         Page<Restaurant> restaurants = await consumerService.getAllRestaurant(page);
+                return Ok(restaurants);
+        }
 
 
-        [HttpGet("/view-menu/{RestaurantId}")]
+        [HttpGet("view-menu/{RestaurantId}")]
         public async Task<ActionResult<Menu>> viewMenu([FromRoute] long RestaurantId)
         {
            var menu = await consumerService.viewMenuByRestaurantId(RestaurantId);
             return Ok(menu);
         }
 
-        [HttpGet("/view-cart/{RestaurantId}")]
+        [HttpGet("view-cart/{RestaurantId}")]
         public async Task<ActionResult<CartDto>> viewCart([FromRoute] long RestaurantId)
         {
            var CartDto = await consumerService.viewCart(RestaurantId);
@@ -114,7 +110,7 @@ namespace Zomato.Controllers
         }
 
 
-        [HttpGet("/get-consumer-otp/{OrderId}")]
+        [HttpGet("get-consumer-otp/{OrderId}")]
         public async Task<ActionResult<ConsumerOTP>> getConsumerOtp([FromRoute] long OrderId)
         {
           var OTP = await consumerService.getOtpByOrderId(OrderId);

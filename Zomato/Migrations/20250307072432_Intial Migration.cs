@@ -40,14 +40,15 @@ namespace Zomato.Migrations
                     city = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     state = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     postalCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Userid = table.Column<long>(type: "bigint", nullable: true)
+                    userLocation = table.Column<Point>(type: "geography", nullable: false),
+                    userid = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Address", x => x.id);
                     table.ForeignKey(
-                        name: "FK_Address_User_Userid",
-                        column: x => x.Userid,
+                        name: "FK_Address_User_userid",
+                        column: x => x.userid,
                         principalTable: "User",
                         principalColumn: "id");
                 });
@@ -443,9 +444,9 @@ namespace Zomato.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Address_Userid",
+                name: "IX_Address_userid",
                 table: "Address",
-                column: "Userid");
+                column: "userid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cart_consumerid",

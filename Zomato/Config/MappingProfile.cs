@@ -17,19 +17,16 @@ namespace Zomato.Config
             CreateMap<Wallet, WalletDto>();
             CreateMap<OrderRequests, OrderRequestsDto>();
             CreateMap<DeliveryPartner, DeliveryPartnerDto>();
-
-
-
-
-
-
-
-
-
-
-
-
-
+            CreateMap<Address,AddressDto>();
+            CreateMap<CreateOrderRequestDto,CreateOrderRequest>();
+            CreateMap<OnBoardDeliveryPartnerDto,DeliveryPartner>();
+            CreateMap<OnBoardRestaurantPartnerDto,RestaurantPartner>();
+            CreateMap<CartDto,Cart>();
+            CreateMap<DeliveryPartner,DeliveryPartnerDto>();
+            CreateMap<MenuItem,MenuItemDto>();
+            CreateMap<OrderRequests,Order>();
+            CreateMap<AddNewRestaurantDto,RestaurantDto>();
+            CreateMap<MenuItemDto, MenuItem>();
 
 
             // String to Long? conversion
