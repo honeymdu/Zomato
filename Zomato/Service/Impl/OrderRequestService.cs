@@ -74,9 +74,9 @@ namespace Zomato.Service.Impl
 
         public async Task<OrderRequests> save(OrderRequests orderRequests)
         {
-            _context.OrderRequest.Add(orderRequests);
+           var updateOrderRequest = _context.OrderRequest.Add(orderRequests).Entity;
            await _context.SaveChangesAsync();
-            return orderRequests;
+            return updateOrderRequest;
         }
     }
 }

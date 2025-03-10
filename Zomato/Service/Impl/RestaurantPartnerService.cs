@@ -48,7 +48,6 @@ namespace Zomato.Service.Impl
                 return order;
 
             }
-
             throw new Exception(
                     "Can not accept the order Request as the order Request status ="
                             + orderRequests.orderRequestStatus);
@@ -71,7 +70,7 @@ namespace Zomato.Service.Impl
 
         public async Task<RestaurantPartner> createNewRestaurantPartner(RestaurantPartner restaurantPartner)
         {
-            _context.RestaurantPartner.Add(restaurantPartner);
+           var restaurant_Partner = _context.RestaurantPartner.Add(restaurantPartner).Entity;
            await _context.SaveChangesAsync();
             return restaurantPartner;
 
@@ -80,7 +79,7 @@ namespace Zomato.Service.Impl
         public async Task<RestaurantDto> createRestaurant(AddNewRestaurantDto addNewRestaurantDto)
         {
             RestaurantDto restaurant = _mapper.Map<RestaurantDto>(addNewRestaurantDto);
-            Restaurant savedRestaurant = await restaurantService.AddNewRestaurant( await getCurrentRestaurantPartner(), restaurant);
+            Restaurant savedRestaurant = await restaurantService.AddNewRestaurant(await getCurrentRestaurantPartner(), restaurant);
             return _mapper.Map<RestaurantDto>(savedRestaurant);
         }
 

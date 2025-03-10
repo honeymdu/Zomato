@@ -38,9 +38,9 @@ namespace Zomato.Service.Impl
 
             await walletTransactionService
                     .CreateNewWalletTransaction(walletTransaction);
-            _context.Wallet.Update(wallet);
+           var saved_Wallet = _context.Wallet.Update(wallet).Entity;
             await _context.SaveChangesAsync();
-            return _mapper.Map<WalletDto>(wallet);
+            return _mapper.Map<WalletDto>(saved_Wallet);
         }
 
         public async Task<WalletDto> createNewWallet(User user)
@@ -48,9 +48,9 @@ namespace Zomato.Service.Impl
             Wallet wallet = new Wallet();
             wallet.user =user;
             wallet.Balance =0.0;
-            _context.Wallet.Update(wallet);
+            var updateWallet =_context.Wallet.Update(wallet).Entity;
             await _context.SaveChangesAsync();
-            return _mapper.Map<WalletDto>(wallet);
+            return _mapper.Map<WalletDto>(updateWallet);
         }
 
         public async Task<Wallet> deductMoneyFromWallet(User user, double amount, string transactionId, Order order, TransactionMethod transactionMethod)
@@ -71,9 +71,9 @@ namespace Zomato.Service.Impl
             // wallet.getWalletTransaction().add(walletTransaction);
            await walletTransactionService
                     .CreateNewWalletTransaction(walletTransaction);
-            _context.Wallet.Update(wallet);
+           var Update_Wallet = _context.Wallet.Update(wallet).Entity;
            await _context.SaveChangesAsync();
-            return wallet;
+            return Update_Wallet;
         }
 
         public async Task<Wallet> findWalletById(long WalletId)

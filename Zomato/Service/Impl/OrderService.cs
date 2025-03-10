@@ -26,9 +26,9 @@ namespace Zomato.Service.Impl
             if (order.orderStatus.Equals(OrderStatus.ACCEPTED))
             {
                 order.orderStatus = OrderStatus.CANCELLED;
-               _context.Order.Update(order);
+               var updatedOrder = _context.Order.Update(order).Entity;
                await _context.SaveChangesAsync();
-                return order;
+                return updatedOrder;
 
             }
             throw new Exception("Can not cancel order as OrderRequest status is not Accepted earlier");
@@ -51,9 +51,9 @@ namespace Zomato.Service.Impl
                 }
                 order.orderItems = orderItems;
                 order.orderStatus =OrderStatus.ACCEPTED;
-                _context.Order.Add(order);
+                var updateOrder = _context.Order.Add(order).Entity;
                 await _context.SaveChangesAsync();
-                return order;
+                return updateOrder;
             }
             throw new Exception("Can not create order as OrderRequest status is not Accepted");
         }
@@ -72,18 +72,18 @@ namespace Zomato.Service.Impl
 
         public async Task<Order> saveOrder(Order order)
         {
-            _context.Order.Add(order);
+            var orderCreated = _context.Order.Add(order).Entity;
             await _context.SaveChangesAsync();
-            return order;
+            return orderCreated;
         }
 
         public async Task<Order> updateOrderStatus(long OrderId, OrderStatus orderStatus)
         {
             Order order = await getOrderById(OrderId);
             order.orderStatus = orderStatus;
-            _context.Update(order);
+           var updateOrder = _context.Update(order).Entity;
             await _context.SaveChangesAsync();
-            return order;
+            return updateOrder;
         }
 
     }

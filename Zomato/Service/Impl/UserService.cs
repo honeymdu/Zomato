@@ -62,9 +62,9 @@ namespace Zomato.Service.Impl
 
         public async Task<User> save(User user)
         {
-            _context.User.Add(user);
+           var savedUser = _context.User.Add(user).Entity;
            await _context.SaveChangesAsync();
-            return await GetUserByEmail(user.email);
+            return await GetUserByEmail(savedUser.email);
         }
     }
 }

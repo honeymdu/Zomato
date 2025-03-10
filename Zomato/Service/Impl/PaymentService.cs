@@ -32,9 +32,9 @@ namespace Zomato.Service.Impl
             {
                 payment.paymentStatus = PaymentStatus.CONFIRMED;
             }
-            _context.Payment.Add(payment);
+            var created_Payment =_context.Payment.Add(payment).Entity;
             await _context.SaveChangesAsync();
-            return payment;
+            return created_Payment;
         }
 
         public async Task processPayment(Order order)

@@ -29,9 +29,9 @@ namespace Zomato.Service.Impl
             menuItem.menu = menu;
             menuItem.rating = 0.0;
             _context.MenuItem.Add(menuItem);
-            _context.Menu.Update(menu);
+            var updateMenu = _context.Menu.Update(menu).Entity;
             await _context.SaveChangesAsync();
-            return menu;
+            return updateMenu;
         }
 
         public async Task<bool> checkMenuItemExistByName(long RestaurantId, MenuItem MenuItem)
@@ -51,8 +51,6 @@ namespace Zomato.Service.Impl
         public async Task<Menu> CreateMenu(CreateMenu createMenu)
         {
             List<MenuItem> menuItems = _mapper.Map<List<MenuItem>>(createMenu.menuItem);
-
-        
             Menu menu = new Menu()
             {
                 menuItems = menuItems,
@@ -60,9 +58,9 @@ namespace Zomato.Service.Impl
                 restaurant = createMenu.restaurant
             };
 
-            _context.Add(menu);
+            var updateMenu = _context.Add(menu).Entity;
             await _context.SaveChangesAsync();
-            return menu;
+            return updateMenu;
         }
 
         public async Task<Menu> getMenuById(long MenuId)

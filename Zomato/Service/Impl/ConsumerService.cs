@@ -51,9 +51,9 @@ namespace Zomato.Service.Impl
                 user = user,
                 rating = 0.0
             };
-            context.Consumer.Add(consumer);
+           var savedConsumer = context.Consumer.Add(consumer).Entity;
             await context.SaveChangesAsync();
-            return consumer;
+            return savedConsumer;
         }
 
         public async Task<OrderRequestsDto> createOrderRequest(long RestaurantId, CreateOrderRequest createOrderRequest)

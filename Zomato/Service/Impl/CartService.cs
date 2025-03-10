@@ -41,9 +41,9 @@ namespace Zomato.Service.Impl
             cart.cartItems.Add(cartItem);
             cart.totalPrice = cart.totalPrice
                 + (cartItem.menuItem.price * cartItem.totalPrice);
-            _context.Cart.Update(cart);
+            var updateCart = _context.Cart.Update(cart).Entity;
             await _context.SaveChangesAsync();
-            return _mapper.Map<CartDto>(cart);
+            return _mapper.Map<CartDto>(updateCart);
 
         }
 
@@ -53,9 +53,9 @@ namespace Zomato.Service.Impl
             await isValidCart(cart);
             cart.cartItems.Clear();
             cart.totalPrice = 0.0;
-            _context.Cart.Update(cart);
+           var updateCart = _context.Cart.Update(cart).Entity;
            await _context.SaveChangesAsync();
-            return cart;
+           return updateCart;
         }
 
         public async Task<Cart> createCart(long restaurantId, Consumer consumer)
@@ -67,9 +67,9 @@ namespace Zomato.Service.Impl
                 totalPrice = 0.0,
                 validCart = true
             };
-            _context.Cart.Add(cart);
+            var savedCart = _context.Cart.Add(cart).Entity;
             await _context.SaveChangesAsync();
-            return cart;
+            return savedCart;
         }
 
         public async Task deleteAllCartItemByCartId(long cartId)
@@ -150,7 +150,7 @@ namespace Zomato.Service.Impl
                 CartItem cartItem = cartItemService.getCartItemByMenuItemAndCart(menuItem, cart);
                 cartItemService.incrementCartItemQuantity(1, cartItem);
                 var updatedCart = refreshCartTotalPrice(cart);
-                CartDto cartDto = _mapper.Map<CartDto>(cart);
+                CartDto cartDto = _mapper.Map<CartDto>(updatedCart);
                 return cartDto;
             }
             else
@@ -187,9 +187,9 @@ namespace Zomato.Service.Impl
 
         public async Task<Cart> saveCart(Cart cart)
         {
-            _context.Cart.Update(cart);
+            var updateCart = _context.Cart.Update(cart).Entity;
             await _context.SaveChangesAsync();
-            return cart;
+            return updateCart;
         }
 
         public async Task<CartDto> viewCart(long CartId)
@@ -206,9 +206,9 @@ namespace Zomato.Service.Impl
         private async Task<Cart> refreshCartTotalPrice(Cart cart)
         {
             cart.totalPrice = cart.cartItems.Sum(item => item.totalPrice);
-            _context.Cart.Update(cart);
+            var updateCart = _context.Cart.Update(cart).Entity;
            await _context.SaveChangesAsync();
-            return cart;
+            return updateCart;
         }
     }
 }

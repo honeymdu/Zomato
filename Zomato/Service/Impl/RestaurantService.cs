@@ -31,17 +31,17 @@ namespace Zomato.Service.Impl
             restaurant.isAvailable = true;
             restaurant.rating = 0.0;
             restaurant.restaurantPartner = restaurantPartner;
-            _context.Restaurant.Add(restaurant);
+            var updateRestaurant = _context.Restaurant.Add(restaurant).Entity;
             await _context.SaveChangesAsync();
-            return restaurant;
+            return updateRestaurant;
         }
 
         public async Task<List<Restaurant>> GetAllVerifiedAndActiveRestaurants()
         {
             return await _context.Restaurant
-                .Where(r => r.isAvailable && r.isVarified) // Use PascalCase for properties
-                .OrderBy(r => r.id) // PascalCase for Id
-                .ToListAsync(); // Use ToListAsync() for async execution
+                .Where(r => r.isAvailable && r.isVarified) 
+                .OrderBy(r => r.id) 
+                .ToListAsync();
         }
 
 
@@ -78,9 +78,9 @@ namespace Zomato.Service.Impl
         {
             return await _context.Restaurant
             .Where(r => r.isAvailable && r.isVarified &&
-                        r.restaurantLocation.IsWithinDistance(UserSrc, 15000)) // 15km radius
-            .OrderBy(r => r.restaurantLocation.Distance(UserSrc)) // Sort by nearest
-            .Take(10) // Limit 10
+                        r.restaurantLocation.IsWithinDistance(UserSrc, 15000)) 
+            .OrderBy(r => r.restaurantLocation.Distance(UserSrc)) 
+            .Take(10)
             .ToListAsync();
         }
 
@@ -105,9 +105,9 @@ namespace Zomato.Service.Impl
 
         public async Task<Restaurant> save(Restaurant restaurant)
         {
-            _context.Update(restaurant);
+           var updatedRestaurant = _context.Update(restaurant).Entity;
             await _context.SaveChangesAsync();
-            return restaurant;
+            return updatedRestaurant;
         }
 
         public async Task<Menu> viewMenu(long restaurantId)
